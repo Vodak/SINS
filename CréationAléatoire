@@ -20,4 +20,8 @@ Etapes  de créations de la map aléatoire :
         - Hôpital
         - Psy
     07- Amenagement des maisons en fonction de leur fonction :
-        - Ecole : Chaise école + 
+        - Ecole : Chaise école + Table école + Place prof + Tableau
+        - Maison de type habitation : Lit.
+        - Restaurant : Table + Chaise + Four + Entrée four
+        - Hôpital : Chaise médecin + Lit médecin
+        - Psy : Gangnam Style + Chaise psy + Lit psy
