@@ -1,4 +1,3 @@
-
 statistiques:
     vie
     fatigue
@@ -6,5 +5,8 @@ statistiques:
     bonheur
     maladie
 
+    influence
+    intelligence
+
 envies:
-    
+    /* to do */
