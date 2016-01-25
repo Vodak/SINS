@@ -1,2 +1,16 @@
 
-Etapes de EtapesEtapesEtapesEtapesEtapesEtapesEtapesEtapesEtapesEtapesEtapesEtapes
+Etapes  de créations de la map aléatoire :
+    01- Positionnement de la terre (remplir de partout)
+    02- Positionnement des countours, remplis d'eau (2 Blocs)
+    03- Positionnement random du sables aux extremités Eau-Terre
+        3 lignes de sables :
+            1- 1 ligne de sable posée de manière random (3-5) Eau/Sable
+            2- 1 ligne de sable continue
+            3- 1 ligne de sable posée de manière random (3-5) Sable/Terre
+    04- Positionnement des routes selon un choix de patterns (crée a l'avance)
+        -> A peu près une dizaine de patterns dans la première version
+        -> Un pattern de route est choisi aléatoirement et est posé sur la map
+    05- Positionnement des maisons
+        -> La porte doit obligatoirement se trouver en face d'une route, avec 1 case d'herbe entre la porte et la route
+        -> Minimum 1 case d'écart entre 2 maisons
+    06-
