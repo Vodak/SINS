@@ -1,0 +1,12 @@
+banc (s'asseoir)
+check point /* invisible */ (marcher)
+lit (dormir)
+chaise d'école (travailler)
+    table d'école #obstacle#
+entrée du four /* invisible */ (cuire)
+    four #obstacle#
+chaise (manger)
+    table #obstacle#
+place du prof /* invisible */ (enseigner)
+    tableau #obstacle#
+       
