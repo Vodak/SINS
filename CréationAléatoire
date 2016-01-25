@@ -13,4 +13,11 @@ Etapes  de créations de la map aléatoire :
     05- Positionnement des maisons
         -> La porte doit obligatoirement se trouver en face d'une route, avec 1 case d'herbe entre la porte et la route
         -> Minimum 1 case d'écart entre 2 maisons
-    06-
+    06- Definition des rôles des maisons :
+        - Ecole
+        - Maison de type habitation
+        - Restaurant
+        - Hôpital
+        - Psy
+    07- Amenagement des maisons en fonction de leur fonction :
+        - Ecole : Chaise école + 
