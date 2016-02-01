@@ -5,8 +5,20 @@ statistiques:
     bonheur
     maladie
 
-    influence
+    charisme
     intelligence
+    force
+    soumission
+    endurance
+    
+    age
+    sexe
+    
+    affinité []
+    admiration []
+    filiation []
+    
+    métier
 
 envies:
     /* to do */
