@@ -1,0 +1,16 @@
+01- banc (s'asseoir)
+02- check point /* invisible */ (marcher)
+03- lit (dormir)
+04- chaise d'école (travailler)
+    table d'école #obstacle#
+05- entrée du four /* invisible */ (cuire)
+    four #obstacle#
+06- chaise (manger)
+    table #obstacle#
+07- place du prof /* invisible */ (enseigner)
+    tableau #obstacle#
+08- lit de médecin (être soigné)
+09- chaise de médecin (soigner)
+10- lit de psychiatre (être soingé psy)
+11- chaise de psychiatre (soigner psy)
+12- banc de pêche (pêcher)
