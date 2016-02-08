@@ -6,5 +6,4 @@ class Bloc(Enum):
     Herbe = 2
     Plancher = 3
     Birque = 4
-    AutorouteA76DirectionDijon = 5
-    PetitPortillonMignon = 6
+    Route = 5
