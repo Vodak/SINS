@@ -5,5 +5,5 @@ class Bloc(Enum):
     Sable = 1
     Herbe = 2
     Plancher = 3
-    Brique = 4
+    Birque = 4
     Route = 5
