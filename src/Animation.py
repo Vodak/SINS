@@ -1,2 +1,5 @@
 class Animation:
-    pass
+    
+    def __init__(self, tableau, temps):
+        self.tableau = tableau
+        self.temps = temps
