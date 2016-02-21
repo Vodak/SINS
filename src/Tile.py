@@ -38,3 +38,7 @@ class Tile :
 	def _set_Objet(self, IA):
 		
 		self._Objet = Objet
+	
+	IA = property(_get_IA, _set_IA)
+	Bloc = property(_get_Bloc, _set_Bloc)
+	Objet = property(_get_Objet, _set_Objet)
