@@ -1,3 +1,7 @@
+from IA import *
+from Bloc import *
+from Objet import *
+
 class Tile :
 	
 	def __init__(self):
