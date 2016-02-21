@@ -56,18 +56,18 @@ class Map:
 		# Disposition de la roux-teux
 
 		for i in range(14, 82):
-			carte[36][i] = Bloc.AutorouteA76DirectionDijon
+			carte[36][i] = Bloc.Route
 
 		for i in range(9, 63):
-			carte[i][48] = Bloc.AutorouteA76DirectionDijon
+			carte[i][48] = Bloc.Route
 
 		for i in range(29, 65):
-			carte[i][14] = Bloc.AutorouteA76DirectionDijon
-			carte[i][61] = Bloc.AutorouteA76DirectionDijon
+			carte[i][14] = Bloc.Route
+			carte[i][61] = Bloc.Route
 
 		for i in range(26, 48):
-			carte[19][i] = Bloc.AutorouteA76DirectionDijon
-			carte[76][i] = Bloc.AutorouteA76DirectionDijon
+			carte[19][i] = Bloc.Route
+			carte[76][i] = Bloc.Route
 
 		# Disposition des maisons
 
