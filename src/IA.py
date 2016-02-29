@@ -1,4 +1,10 @@
+"""
+Classe d'intelligence artificielle avec des attributs et des méthodes gérant leur actions
+"""
+
 class IA:
+    
+    # Constructeur
     
     def __init__(self):
         self._vie = 100
@@ -144,6 +150,8 @@ class IA:
     
     def _set_sexe(self, sexe):
         self._sexe = sexe
+    
+    # Attributs publics de la classe par accès à des attributs privés
     
     vie = property(_get_vie, _set_vie)
     fatigue = property(_get_fatigue, _set_fatigue)
