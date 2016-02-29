@@ -1,3 +1,7 @@
+"""
+Classe Bloc qui est une énumeration
+"""
+
 from enum import Enum
 
 class Bloc(Enum):
