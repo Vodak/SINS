@@ -1,10 +1,17 @@
+"""
+Classe Tile permettant de creer un objet case pouvant contenir un personnage, un bloc et un objet
+"""
+
 from IA import *
 from Bloc import *
 from Objet import *
 
 class Tile :
+
+	# Constructeur
 	
 	def __init__(self):
+		
 		self._IA = IA()
 		self._Bloc = Bloc()
 		self._Objet = Objet()
@@ -38,6 +45,9 @@ class Tile :
 	def _set_Objet(self, IA):
 		
 		self._Objet = Objet
+		
+		
+	# Attributs publics de la classe par accès à des attributs privés
 	
 	IA = property(_get_IA, _set_IA)
 	Bloc = property(_get_Bloc, _set_Bloc)
