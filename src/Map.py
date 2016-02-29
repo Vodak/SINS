@@ -1,11 +1,13 @@
+"""
+Classe Map permettant de créer une map aléatoire
+"""
+
 from Tile import *
 
 
 class Map:
 
-	#
 	# constructeur
-	#
 
 	def __init__(self):
 		
@@ -13,9 +15,7 @@ class Map:
 		
 		carte = [[Case] * 72 for i in range(96)] 
 
-	#
-	# Créatage de la carte
-	#
+	# Création de la carte
 
 	def generate(self):
 
@@ -33,7 +33,7 @@ class Map:
 			carte[i][94] = Bloc.Eau
 			carte[i][95] = Bloc.Eau
 
-		# Disposition du Saaaaable
+		# Disposition du sable
 
 		for i in range(2, 93):
 			carte[2][i] = Bloc.Sable
@@ -47,13 +47,13 @@ class Map:
 			carte[i][92] = Bloc.Sable
 			carte[i][93] = Bloc.Sable
 
-		# Disposition de l'Hêêêêêrbeuuuh
+		# Disposition de l'Hèrbe
 
 		for i in range(4, 92):
 			for j in range(4, 68):
 				carte[i][j] = Bloc.Herbe
 
-		# Disposition de la roux-teux
+		# Disposition du chemins
 
 		for i in range(14, 82):
 			carte[36][i] = Bloc.Route
@@ -91,9 +91,7 @@ class Map:
 		maison(81, 51)
 		maison(6, 60)
 
-		#
-		# Créatage des maisons
-		#
+		# Création des maisons
 
 	def maison(self, xBloc, yBloc):
 
