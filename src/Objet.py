@@ -1,3 +1,7 @@
+"""
+Classe Objet étant un énumération
+"""
+
 from enum import Enum
 
 class Objet(Enum):
