@@ -47,7 +47,7 @@ class Map:
 			carte[i][92] = Bloc.Sable
 			carte[i][93] = Bloc.Sable
 
-		# Disposition de l'Hèrbe
+		# Disposition de l'Hêrbe
 
 		for i in range(4, 92):
 			for j in range(4, 68):
