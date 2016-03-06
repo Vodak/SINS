@@ -22,52 +22,52 @@ class Map:
 		# Disposition des bordures en eau de la carte
 
 		for i in range(95):
-			carte[0][i] = Bloc.Eau
-			carte[1][i] = Bloc.Eau
-			carte[70][i] = Bloc.Eau
-			carte[71][i] = Bloc.Eau
+			map[0][i] = Bloc.Eau
+			map[1][i] = Bloc.Eau
+			map[70][i] = Bloc.Eau
+			map[71][i] = Bloc.Eau
 
 		for i in range(71):
-			carte[i][0] = Bloc.Eau
-			carte[i][1] = Bloc.Eau
-			carte[i][94] = Bloc.Eau
-			carte[i][95] = Bloc.Eau
+			map[i][0] = Bloc.Eau
+			map[i][1] = Bloc.Eau
+			map[i][94] = Bloc.Eau
+			map[i][95] = Bloc.Eau
 
 		# Disposition du sable
 
 		for i in range(2, 93):
-			carte[2][i] = Bloc.Sable
-			carte[3][i] = Bloc.Sable
-			carte[68][i] = Bloc.Sable
-			carte[69][i] = Bloc.Sable
+			map[2][i] = Bloc.Sable
+			map[3][i] = Bloc.Sable
+			map[68][i] = Bloc.Sable
+			map[69][i] = Bloc.Sable
 
 		for i in range(2, 70):
-			carte[i][2] = Bloc.Sable
-			carte[i][3] = Bloc.Sable
-			carte[i][92] = Bloc.Sable
-			carte[i][93] = Bloc.Sable
+			map[i][2] = Bloc.Sable
+			map[i][3] = Bloc.Sable
+			map[i][92] = Bloc.Sable
+			map[i][93] = Bloc.Sable
 
 		# Disposition de l'Hêrbe
 
 		for i in range(4, 92):
 			for j in range(4, 68):
-				carte[i][j] = Bloc.Herbe
+				map[i][j] = Bloc.Herbe
 
 		# Disposition du chemins
 
 		for i in range(14, 82):
-			carte[36][i] = Bloc.Route
+			map[36][i] = Bloc.Route
 
 		for i in range(9, 63):
-			carte[i][48] = Bloc.Route
+			map[i][48] = Bloc.Route
 
 		for i in range(29, 65):
-			carte[i][14] = Bloc.Route
-			carte[i][61] = Bloc.Route
+			map[i][14] = Bloc.Route
+			map[i][61] = Bloc.Route
 
 		for i in range(26, 48):
-			carte[19][i] = Bloc.Route
-			carte[76][i] = Bloc.Route
+			map[19][i] = Bloc.Route
+			map[67][i] = Bloc.Route
 
 		# Disposition des maisons
 
@@ -98,17 +98,17 @@ class Map:
 		# Disposition des murs
 
 		for i in range(xBloc, xBloc + 9):
-			carte[i + xBloc][yBloc] = Bloc.MurBrique
-			carte[xBloc][yBloc + 6] = Bloc.MurBrique
+			map[i + xBloc][yBloc] = Bloc.Brique
+			map[xBloc][yBloc + 6] = Bloc.Brique
 
 		for i in range(yBloc, yBloc + 6):
-			carte[yBloc][i + yBloc] = Bloc.MurBrique
-			carte[xBloc + 9][yBloc] = Bloc.MurBrique
+			map[yBloc][i + yBloc] = Bloc.Brique
+			map[xBloc + 9][yBloc] = Bloc.Brique
 
 		# Disposition du plancher
 
 		for i in range(xBloc + 1, xBloc + 8):
 			for j in range(yBloc + 1, yBloc + 5):
-				carte[i][j] = Bloc.Plancher
+				map[i][j] = Bloc.Plancher
 
-		carte[5][6] = Bloc.Plancher
+		map[5][6] = Bloc.Plancher
