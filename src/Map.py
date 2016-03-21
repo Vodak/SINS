@@ -70,49 +70,59 @@ class Map:
 			self.map[19][i] = Bloc.Route
 			self.map[67][i] = Bloc.Route
 
-		# Disposition des maisons
 
-		maison(23, 28)
-		maison(10, 27)
-		maison(27, 7)
-		maison(37, 7)
-		maison(56, 7)
-		maison(10, 13)
-		maison(77, 13)
-		maison(61, 28)
-		maison(78, 26)
-		maison(10, 39)
-		maison(23, 37)
-		maison(61, 37)
-		maison(78, 37)
-		maison(25, 54)
-		maison(37, 54)
-		maison(51, 54)
-		maison(63, 54)
-		maison(81, 51)
-		maison(6, 60)
+	# Création des maisons
 
-		# Création des maisons
-
-	def maison(self, xBloc, yBloc):
-
-		# Disposition des murs
-
-		for i in range(xBloc, xBloc + 9):
-			self.map[i + xBloc][yBloc] = Bloc.Brique
-			self.map[xBloc][yBloc + 6] = Bloc.Brique
-
-		for i in range(yBloc, yBloc + 6):
-			self.map[yBloc][i + yBloc] = Bloc.Brique
-			self.map[xBloc + 9][yBloc] = Bloc.Brique
-
-		# Disposition du plancher
-
-		for i in range(xBloc + 1, xBloc + 8):
-			for j in range(yBloc + 1, yBloc + 5):
-				self.map[i][j] = Bloc.Plancher
-
-		self.map[5][6] = Bloc.Plancher
+	def maison(self):
+		(x, y) = (0, 0)
+		
+		pointA = (x, y)
+		pointB = (x + 9, y + 6)
+		
+		route = False
+		positionPorte = (x, y)
+		placable = True
+		
+		for i in range(x , x + 9):
+			for j in  range(y, y + 6):
+				if map[i][j] != Bloc.Herbe:
+					placable = False
+		if placable:
+			for i in range(x + 1, x + 8):
+				if map[i][y - 1] == Bloc.Route:
+					if not route:
+						positionPorte = (i, y - 1)
+					route = True
+					
+				elif map[i][y + 7] == Bloc.Route:
+					if not route:
+						positionPorte = (i, y + 7)
+					route = True
+					
+			for j in range(y + 1, y + 5):
+				if map[x - 1][j] == Bloc.Route:
+					if not route:
+						positionPorte = (x - 1, j)
+					route = True
+				
+				if map[x + 10][j] == Bloc.Route:
+					if not route:
+						positionPorte = (x + 10, j)
+					route = True
+		
+		if route and placable:
+			# Disposition des murs :
+			for i in range(x + 1, x + 8):
+				map[i][y] = Bloc.Brique
+				map[i][y + 5] = Bloc.Brique
+			for j in range(y + 1, y + 5):
+				map[x][j] = Bloc.Brique
+				map[x + 8][j] = Bloc.Brique
+			
+			# Disposition du plancher :
+			for k in range(x + 1, x + 8):
+				for l in range(y + 1, y + 5):
+					map[k][l] = Bloc.Plancher
 	
 	# fonction renvoyant la distance minimale entre 2 blocs, en considérant les cases où il est impossible de se déplacer
 	
