@@ -1,6 +1,7 @@
-from map import *
+from Map import *
 
-generate()
+carte = Map()
+carte.generate()
 
 x = 0
 y = 0
