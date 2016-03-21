@@ -44,4 +44,15 @@ if placable:
 			route = True
 
 if route and placable:
-	#brauique, plancher, porte
+	# Disposition des murs :
+	for i in range(x + 1, x + 8):
+		map[i][y] = Bloc.Brique
+		map[i][y + 5] = Bloc.Brique
+	for j in range(y + 1, y + 5):
+		map[x][j] = Bloc.Brique
+		map[x + 8][j] = Bloc.Brique
+	
+	# Disposition du plancher :
+	for k in range(x + 1, x + 8):
+		for l in range(y + 1, y + 5):
+			map[k][l] = Bloc.Plancher
