@@ -1,6 +1,7 @@
 """
-Fichier provisoir
+Fichier provisoire
 """
+
 from Map import *
 
 carte = Map()
