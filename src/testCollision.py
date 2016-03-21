@@ -17,16 +17,26 @@ placable = True
 
 for i in range(x, x + 9):
 	if map[i][y - 2] == Bloc.Route:
+		if not route:
+			positionPorte = (i, y - 2)
 		route = True
-		positionPorte = map[i][y - 2]
-	elifmap[i][y + 8] == Bloc.Route:
+		
+	elif map[i][y + 8] == Bloc.Route:
+		if not route:
+			positionPorte = (i, y + 8)
 		route = True
-		positionPorte = map[i][y + 8]
-
+		
 for j in range(y, y + 6):
-	if map[x -2][j] == Bloc.Route or map[x + 11][j] == Bloc.Route:
+	if map[x -2][j] == Bloc.Route:
+		if not route:
+			positionPorte = (x - 2, j)
 		route = True
-
+	
+	if map[x + 11][j] == Bloc.Route:
+		if not route:
+			positionPorte = (x + 11, j)
+		route = True
+	
 for i in range(x , x + 9):
 	for j in  range(y, y + 6):
 		if map[i][j] != Bloc.Herbe:
