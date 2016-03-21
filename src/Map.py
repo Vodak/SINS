@@ -85,27 +85,27 @@ class Map:
 		
 		for i in range(x , x + 9):
 			for j in  range(y, y + 6):
-				if map[i][j] != Bloc.Herbe:
+				if self.map[i][j] != Bloc.Herbe:
 					placable = False
 		if placable:
 			for i in range(x + 1, x + 8):
-				if map[i][y - 1] == Bloc.Route:
+				if self.map[i][y - 1] == Bloc.Route:
 					if not route:
 						positionPorte = (i, y - 1)
 					route = True
 					
-				elif map[i][y + 7] == Bloc.Route:
+				elif self.map[i][y + 7] == Bloc.Route:
 					if not route:
 						positionPorte = (i, y + 7)
 					route = True
 					
 			for j in range(y + 1, y + 5):
-				if map[x - 1][j] == Bloc.Route:
+				if self.map[x - 1][j] == Bloc.Route:
 					if not route:
 						positionPorte = (x - 1, j)
 					route = True
 				
-				if map[x + 10][j] == Bloc.Route:
+				if self.map[x + 10][j] == Bloc.Route:
 					if not route:
 						positionPorte = (x + 10, j)
 					route = True
@@ -113,16 +113,16 @@ class Map:
 		if route and placable:
 			# Disposition des murs :
 			for i in range(x + 1, x + 8):
-				map[i][y] = Bloc.Brique
-				map[i][y + 5] = Bloc.Brique
+				self.map[i][y] = Bloc.Brique
+				self.map[i][y + 5] = Bloc.Brique
 			for j in range(y + 1, y + 5):
-				map[x][j] = Bloc.Brique
-				map[x + 8][j] = Bloc.Brique
+				self.map[x][j] = Bloc.Brique
+				self.map[x + 8][j] = Bloc.Brique
 			
 			# Disposition du plancher :
 			for k in range(x + 1, x + 8):
 				for l in range(y + 1, y + 5):
-					map[k][l] = Bloc.Plancher
+					self.map[k][l] = Bloc.Plancher
 	
 	# fonction renvoyant la distance minimale entre 2 blocs, en considérant les cases où il est impossible de se déplacer
 	
