@@ -6,13 +6,31 @@ from Map import *
 carte = Map()
 carte.generate()
 
-x = 0
-y = 0
-maison = map[x][y]
+(x, y) = (5, 5)
 
-for i in range(96):
-	for j in range(72):
-	
-	if map[i+2][j] == bloc.Route or map[i][j+2] == bloc.Route or map[i-2][j] == bloc.Route or map[i][j-2] == bloc.Route or map[i+2][j+1] == bloc.Route or map[i+2][j-1] == bloc.Route or map[i-2][j+1] == bloc.Route or map[i-2][j-1] == bloc.Route or map[i+1][j+2] == bloc.Route or map[i-1][j+2] == bloc.Route or map[i+1][j-2] == bloc.Route or map[i-1][j-2] == bloc.Route:
-		if map[i+1][j] == bloc.Herbe and map[i+1][j+1] == bloc.Herbe and map[i+1][j-1] == bloc.Herbe and map[i][j+1] == bloc.Herbe and map[i][j-1] == bloc.Herbe and map[i-1][j] == bloc.Herbe and map[i-1][j+1] == bloc.Herbe and map[i-1][j-1] == bloc.Herbe:
-			
+pointA = (x, y)
+pointB = (x + 9, y + 6)
+
+route = False
+positionPorte = (x, y)
+placable = True
+
+for i in range(x, x + 9):
+	if map[i][y - 2] == Bloc.Route:
+		route = True
+		positionPorte = map[i][y - 2]
+	elifmap[i][y + 8] == Bloc.Route:
+		route = True
+		positionPorte = map[i][y + 8]
+
+for j in range(y, y + 6):
+	if map[x -2][j] == Bloc.Route or map[x + 11][j] == Bloc.Route:
+		route = True
+
+for i in range(x , x + 9):
+	for j in  range(y, y + 6):
+		if map[i][j] != Bloc.Herbe:
+			placable = False
+
+if route and placable:
+	#braique, plancher, porte
