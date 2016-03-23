@@ -19,7 +19,7 @@ class Animation:
         
         # Chaque image est affichée un certain temps
         
-        for i in range(len(tableau)):
-            sf.draw(tableau[i])
+        for i in range(len(self.tableau)):
+            sf.draw(self.tableau[i])
             sf.display()
-            sf.sleep(temps)
+            sf.sleep(self.temps)
