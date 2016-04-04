@@ -12,16 +12,22 @@ class Tile :
 	
 	def __init__(self):
 		
-		self._IA = IA()
+		self._IA = list()
 		self._Bloc = Bloc()
 		self._Objet = Objet()
 		
 		
 	# Get List
 	
-	def _get_IA(self):
+	def isIA(self):
 		
-		return self._IA
+		if len(self._IA) == 0:
+		    return False
+		else:
+		    return True
+	
+	def _get_IA(self):
+		return self._IA[0]
 	
 	def _get_Bloc(self):
 		
@@ -36,7 +42,7 @@ class Tile :
 	
 	def _set_IA(self, IA):
 		
-		self._IA = IA
+		self._IA[0] = IA
 		
 	def _set_Bloc(self, Bloc):
 		
