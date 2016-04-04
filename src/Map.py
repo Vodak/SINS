@@ -83,8 +83,12 @@ class Map:
 		positionPorte = (x, y)
 		placable = True
 		
+		ecole = False
+		hopital = False
+		psychiatre = False
+		
 		for i in range(x , x + 9):
-			for j in  range(y, y + 6):
+			for j in  range(y, y + 7):
 				if self.map[i][j] != Bloc.Herbe:
 					placable = False
 		if placable:
@@ -99,7 +103,7 @@ class Map:
 						positionPorte = (i, y + 7)
 					route = True
 					
-			for j in range(y + 1, y + 5):
+			for j in range(y + 1, y + 6):
 				if self.map[x - 1][j] == Bloc.Route:
 					if not route:
 						positionPorte = (x - 1, j)
@@ -115,14 +119,57 @@ class Map:
 			for i in range(x + 1, x + 8):
 				self.map[i][y] = Bloc.Brique
 				self.map[i][y + 5] = Bloc.Brique
-			for j in range(y + 1, y + 5):
+			for j in range(y + 1, y + 6):
 				self.map[x][j] = Bloc.Brique
 				self.map[x + 8][j] = Bloc.Brique
 			
 			# Disposition du plancher :
-			for k in range(x + 1, x + 8):
-				for l in range(y + 1, y + 5):
+			for k in range(x + 2, x + 7):
+				for l in range(y + 2, y + 5):
 					self.map[k][l] = Bloc.Plancher
+					
+			# Aménagement des maisons
+			if not ecole :
+				self.map[x + 4][y + 2] = Objet.ChaiseEcole
+				self.map[x + 4][y + 4] = Objet.ChaiseEcole
+				
+				self.map[x + 5][y + 2] = Objet.TableEcole
+				self.map[x + 5][y + 4] = Objet.TableEcole
+				
+				self.map[x + 8][y + 3] = Objet.Tableau
+				self.map[x + 7][y + 3] = Objet.PlaceProf
+				
+				ecole = True
+			
+			if not hopital :
+				self.map[x + 4][y + 2] = Objet.LitMedecin
+				self.map[x + 3][y + 2] = Objet.ChaiseMedecin
+				
+				self.map[x + 7][y + 2] = Objet.LitMedecin
+				self.map[x + 6][y + 2] = Objet.ChaiseMedecin
+				
+				self.map[x + 4][y + 4] = Objet.LitMedecin
+				self.map[x + 3][y + 4] = Objet.ChaiseMedecin
+				
+				self.map[x + 7][y + 4] = Objet.LitMedecin
+				self.map[x + 6][y + 4] = Objet.ChaiseMedecin
+				
+				hopital = True
+				
+			if not psychiatre :
+				self.map[x + 4][y + 2] = Objet.LitPsychiatre
+				self.map[x + 3][y + 2] = Objet.ChaisePsychiatre
+				
+				self.map[x + 7][y + 2] = Objet.LitPsychiatre
+				self.map[x + 6][y + 2] = Objet.ChaisePsychiatre
+				
+				self.map[x + 4][y + 4] = Objet.LitPsychiatre
+				self.map[x + 3][y + 4] = Objet.ChaisePsychiatre
+				
+				self.map[x + 7][y + 4] = Objet.LitPsychiatre
+				self.map[x + 6][y + 4] = Objet.ChaisePsychiatre
+				
+				psychiatre = True
 	
 	# fonction renvoyant la distance minimale entre 2 blocs, en considérant les cases où il est impossible de se déplacer
 	
