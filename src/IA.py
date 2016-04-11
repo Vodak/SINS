@@ -2,6 +2,8 @@
 Classe d'intelligence artificielle avec des attributs et des méthodes gérant leur actions
 """
 
+from Envie import *
+from Metier import *
 from enum import Enum
 
 class Direction(Enum):
@@ -15,7 +17,7 @@ class IA:
     
     # Constructeur
     
-    def __init__(self, x , y):
+    def __init__(self, x , y, envie):
         self._vie = 100
         self._fatigue = 0
         self._faim = 0
@@ -33,6 +35,9 @@ class IA:
         
         self._x = x
         self._y = y
+        
+        self._envie = envie
+        self._metier = Metier.Aucun
     
     # liste des get
     
@@ -77,6 +82,12 @@ class IA:
     
     def _get_y(self):
 	return self._y
+    
+    def _get_envie(self):
+	return self._envie
+    
+    def _get_metier(self):
+	return self._metier
     
     # list des set
     
@@ -172,9 +183,15 @@ class IA:
     def _set_x(self, x):
 	self._x = x
     
-    def _set_y(self; y):
+    def _set_y(self, y):
 	self._y = y
-
+    
+    def _set_envie(self, envie):
+	self._envie = envie
+    
+    def _set_metier(self, metier):
+	self._metier = metier
+	
     # fonctions pour utiliser l'intelligence artificielle
     
     def getDirection(self, carte):
@@ -269,23 +286,61 @@ class IA:
 	
 	for i in range(96):
 	    for j in range(72):
+		
+		interraction = 0
+		
+		# interraction avec les objets
+		
 		if carte[i][j].Objet != Objet.Rien and distance[i][j] != -2:
 		    
-		    interraction = 0
+		    # calcul des envies
 		    
-		    # calcul d'envie d'interraction
+		    # très importants
+		    
+		    if Carte[i][j].Objet == Objet.Lit:
+			interraction += (self._fatigue + self._envie[Action.Dormir] + 101 - self._vie) / distance[i][j]
+		    elif Carte[i][j].Objet == Objet.EntreeFour:
+			interraction += (self._faim + self._envie[Action.Manger] + 101 - self._vie + (50 if self._metier == Metier.Cuisinier)) / distance[i][j]
+		    elif Carte[i][j].Objet == Objet.LitMedecin: 
+			interraction += (self_maladie + self._envie[Action.EtreSoigne] + 101 - self._vie) / distance[i][j]
+		    elif Carte[i][j].Objet == Objet.LitPsychiatre:
+			interraction += (self._envie[Action.EtreSoignePsy] + 202 - self._bonheur - self._vie) / distance[i][j]
+		
+		    # importants
+		    
+		    elif Carte[i][j].Objet == Objet.BancPeche:
+			interraction += (2 * self._envie[Action.Pecher] + (50 if self._metier == Metier.Pecheur)) / distance[i][j]
+		    elif Carte[i][j].Objet == Objet.ChaiseEcole:
+			interraction += (0.8 * (self._envie[ActionApprendre] + 25) + (100 if (self._age >= 5 and self._age <= 15) else 30)) / distance[i][j]
+		    elif Carte[i][j].Objet == Objet.PlaceProf:
+			interraction += (self._envie[Action.Enseigner] + (50 if self._metier == Metier.Professeur)) / distance[i][j]
+		    elif Carte[i][j].Objet == Objet.ChaiseMedecin:
+			interraction += (self._envie[Action.Soigner] + (50 if self._metier == Metier.Medecin)) / distance[i][j]
+		    elif Carte[i][j].Objet == Objet.ChaisePsychiatre:
+			interraction += (self._envie[Action.SoignerPsy] + (50 if self._metier == Metier.Psychiatre)) / distance[i][j]
+		    
+		    # peu importants
+		    
+		    elif Carte[i][j].Objet == Objet.Banc:
+			interraction += (0.8 * (self._envie[Action.Dormir] + self._fatigue)) / distance[i][j]
+		    elif Carte[i][j].Objet == Objet.Chaise:
+			interraction += (0.8 * (self._envie[Action.Sasseoir] + self._fatigue)) / distance[i][j]
+		    elif Carte[i][j].Objet == Objet.Checkpoint:
+			interraction += (1.2 * (self._envie[Action.Marcher] - self._fatigue)) / distance[i][j]
 		    
 		    if interraction > choix[2]:
 			choix = (i, j, interraction)
 		
+		# interractions avec les autres IA
+		
 		if carte[i][j].isIA() and carte[i][j].IA() != self:
-		    
-		    interraction = 0
 		    
 		    # calcul d'envie d'interraction
 		    
 		    if interraction > choix[2]:
 			choix = (i, j, interraction)
+	
+	
 	
 	# détermination de la direction à suivre
 	
@@ -324,3 +379,5 @@ class IA:
     sexe = property(_get_sexe, _set_sexe)
     x = property(_get_x, _set_x)
     y = property(_get_y, _set_y)
+    envie = property(_get_envie, _set_envie)
+    metier = property(_get_metier, _set_metier)
