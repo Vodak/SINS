@@ -10,7 +10,7 @@ class Game:
 	
 	def __init__(self):
 		
-		self._Map = Map()
+		self.Map = Map()
 		
 	# Mise en place du jeu :
 		
@@ -18,21 +18,21 @@ class Game:
 		
 		# Génération de la map :
 		
-		_Map.generate()
+		self.Map.generate()
 		
 		# Disposition des maisons :
 		
-		_Map.maison()
+		self.Map.maison()
 		
 		# Invocation des IA sur la map
 		
 		x = 0
 		y = 0
 		
-		while _Map[x][y] != Bloc.Herbe and _Map[x][y] != Bloc.Plancher and _Map[x][y] != Bloc.Sable:
+		while self.Map.map[x][y] != Bloc.Herbe and self.Map.map[x][y] != Bloc.Plancher and self.Map.map[x][y] != Bloc.Sable:
 
 			x = randint(0, 95)
 			y = randint(0, 71)
 			
-			_Map[x][y].IA = IA(x, y, 21 * [randint(0, 100)])
+			self.Map.map[x][y].IA = IA(x, y, 21 * [randint(0, 100)])
 			

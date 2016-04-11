@@ -2,7 +2,7 @@
 Classe d'intelligence artificielle avec des attributs et des méthodes gérant leur actions
 """
 
-from Envie import *
+from Action import *
 from Metier import *
 from enum import Enum
 
@@ -77,17 +77,17 @@ class IA:
     def _get_sexe(self):
         return self._sexe
     
-    def _ get_x_(self):
-	return self._x
+    def _get_x(self):
+        return self._x
     
     def _get_y(self):
-	return self._y
+        return self._y
     
     def _get_envie(self):
-	return self._envie
+        return self._envie
     
     def _get_metier(self):
-	return self._metier
+        return self._metier
     
     # list des set
     
@@ -178,191 +178,191 @@ class IA:
             self._age = age
     
     def _set_sexe(self, sexe):
-	self._sexe = sexe
+        self._sexe = sexe
     
     def _set_x(self, x):
-	self._x = x
+        self._x = x
     
     def _set_y(self, y):
-	self._y = y
+        self._y = y
     
     def _set_envie(self, envie):
-	self._envie = envie
+        self._envie = envie
     
     def _set_metier(self, metier):
-	self._metier = metier
-	
+        self._metier = metier
+        
     # fonctions pour utiliser l'intelligence artificielle
     
     def getDirection(self, carte):
-	
-	collision = [[0] * 72 for i in range(96)]
-	direction = [[Direction.Aucune] * 72 for i in range(96)]
-	distance = [[-1] * 72 for i in range(96)]
-	
-	# tableau des collisions
-	
-	for i in range(96):
-	    for j in range(72):
-		if carte[i][j].Bloc == Bloc.Brique || carte[i][j].Bloc == Bloc.Eau:
-		    collision[i][j] = 1
-		    distance[i][j] = -2
-		if carte[i][j].Objet == Objet.TableEcole || carte[i][j].Objet == Objet.Four || carte[i][j].Objet == Objet.Table:
-		    collision[i][j] = 1
-		    distance[i][j] = -2
-	
-	# tableau des directions et des distances, algorithme de pathfinding
-	
-	direction[self._x][self._y] = Direction.Aucune
-	distance[self._x][self._y] = 0
-	
-	for i in range(self._x, 0, -1):
-	    for j in range(self._y, 0, -1):
-		if distance[i][j] >= 0:
-		    if distance[i-1][j] != -2:
-			distance[i-1][j] = distance[i][j] + 1 if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-			direction[i-1][j] = Direction.Gauche if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i+1][j] != -2:
-			distance[i+1][j] = distance[i][j] + 1 if distance[i+1][j] == -1 or distance[i][j] + 1 < distance[i+1][j]
-			direction[i+1][j] = Direction.Droite if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i][j-1] != -2:
-			distance[i][j-1] = distance[i][j] + 1 if distance[i][j-1] == -1 or distance[i][j] + 1 < distance[i][j-1]
-			direction[i][j-1] = Direction.Haut if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i][j+1] != -2:
-			distance[i][j+1] = distance[i][j] + 1 if distance[i][j+1] == -1 or distance[i][j] + 1 < distance[i][j+1]
-			direction[i][j+1] = Direction.Bas if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-	
-	for i in range(self._x, 95):
-	    for j in range(self._y, 0, -1):
-		if distance[i][j] >= 0:
-		    if distance[i-1][j] != -2:
-			distance[i-1][j] = distance[i][j] + 1 if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-			direction[i-1][j] = Direction.Gauche if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i+1][j] != -2:
-			distance[i+1][j] = distance[i][j] + 1 if distance[i+1][j] == -1 or distance[i][j] + 1 < distance[i+1][j]
-			direction[i+1][j] = Direction.Droite if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i][j-1] != -2:
-			distance[i][j-1] = distance[i][j] + 1 if distance[i][j-1] == -1 or distance[i][j] + 1 < distance[i][j-1]
-			direction[i][j-1] = Direction.Haut if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i][j+1] != -2:
-			distance[i][j+1] = distance[i][j] + 1 if distance[i][j+1] == -1 or distance[i][j] + 1 < distance[i][j+1]
-			direction[i][j+1] = Direction.Bas if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-	
-	for i in range(self._x, 0, -1):
-	    for j in range(self._y, 71):
-		if distance[i][j] >= 0:
-		    if distance[i-1][j] != -2:
-			distance[i-1][j] = distance[i][j] + 1 if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-			direction[i-1][j] = Direction.Gauche if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i+1][j] != -2:
-			distance[i+1][j] = distance[i][j] + 1 if distance[i+1][j] == -1 or distance[i][j] + 1 < distance[i+1][j]
-			direction[i+1][j] = Direction.Droite if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i][j-1] != -2:
-			distance[i][j-1] = distance[i][j] + 1 if distance[i][j-1] == -1 or distance[i][j] + 1 < distance[i][j-1]
-			direction[i][j-1] = Direction.Haut if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i][j+1] != -2:
-			distance[i][j+1] = distance[i][j] + 1 if distance[i][j+1] == -1 or distance[i][j] + 1 < distance[i][j+1]
-			direction[i][j+1] = Direction.Bas if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-	
-	for i in range(self._x, 95):
-	    for j in range(self._y, 71):
-		if distance[i][j] >= 0:
-		    if distance[i-1][j] != -2:
-			distance[i-1][j] = distance[i][j] + 1 if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-			direction[i-1][j] = Direction.Gauche if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i+1][j] != -2:
-			distance[i+1][j] = distance[i][j] + 1 if distance[i+1][j] == -1 or distance[i][j] + 1 < distance[i+1][j]
-			direction[i+1][j] = Direction.Droite if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i][j-1] != -2:
-			distance[i][j-1] = distance[i][j] + 1 if distance[i][j-1] == -1 or distance[i][j] + 1 < distance[i][j-1]
-			direction[i][j-1] = Direction.Haut if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-		    if distance[i][j+1] != -2:
-			distance[i][j+1] = distance[i][j] + 1 if distance[i][j+1] == -1 or distance[i][j] + 1 < distance[i][j+1]
-			direction[i][j+1] = Direction.Bas if distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]
-	
-	# test pour chaque interraction
-	
-	choix = (0, 0, 0)
-	
-	for i in range(96):
-	    for j in range(72):
-		
-		interraction = 0
-		
-		# interraction avec les objets
-		
-		if carte[i][j].Objet != Objet.Rien and distance[i][j] != -2:
-		    
-		    # calcul des envies
-		    
-		    # très importants
-		    
-		    if Carte[i][j].Objet == Objet.Lit:
-			interraction += (self._fatigue + self._envie[Action.Dormir] + 101 - self._vie) / distance[i][j]
-		    elif Carte[i][j].Objet == Objet.EntreeFour:
-			interraction += (self._faim + self._envie[Action.Manger] + 101 - self._vie + (50 if self._metier == Metier.Cuisinier)) / distance[i][j]
-		    elif Carte[i][j].Objet == Objet.LitMedecin: 
-			interraction += (self_maladie + self._envie[Action.EtreSoigne] + 101 - self._vie) / distance[i][j]
-		    elif Carte[i][j].Objet == Objet.LitPsychiatre:
-			interraction += (self._envie[Action.EtreSoignePsy] + 202 - self._bonheur - self._vie) / distance[i][j]
-		
-		    # importants
-		    
-		    elif Carte[i][j].Objet == Objet.BancPeche:
-			interraction += (2 * self._envie[Action.Pecher] + (50 if self._metier == Metier.Pecheur)) / distance[i][j]
-		    elif Carte[i][j].Objet == Objet.ChaiseEcole:
-			interraction += (0.8 * (self._envie[ActionApprendre] + 25) + (100 if (self._age >= 5 and self._age <= 15) else 30)) / distance[i][j]
-		    elif Carte[i][j].Objet == Objet.PlaceProf:
-			interraction += (self._envie[Action.Enseigner] + (50 if self._metier == Metier.Professeur)) / distance[i][j]
-		    elif Carte[i][j].Objet == Objet.ChaiseMedecin:
-			interraction += (self._envie[Action.Soigner] + (50 if self._metier == Metier.Medecin)) / distance[i][j]
-		    elif Carte[i][j].Objet == Objet.ChaisePsychiatre:
-			interraction += (self._envie[Action.SoignerPsy] + (50 if self._metier == Metier.Psychiatre)) / distance[i][j]
-		    
-		    # peu importants
-		    
-		    elif Carte[i][j].Objet == Objet.Banc:
-			interraction += (0.8 * (self._envie[Action.Dormir] + self._fatigue)) / distance[i][j]
-		    elif Carte[i][j].Objet == Objet.Chaise:
-			interraction += (0.8 * (self._envie[Action.Sasseoir] + self._fatigue)) / distance[i][j]
-		    elif Carte[i][j].Objet == Objet.Checkpoint:
-			interraction += (1.2 * (self._envie[Action.Marcher] - self._fatigue)) / distance[i][j]
-		    
-		    if interraction > choix[2]:
-			choix = (i, j, interraction)
-		
-		# interractions avec les autres IA
-		
-		if carte[i][j].isIA() and carte[i][j].IA() != self:
-		    
-		    # calcul d'envie d'interraction
-		    
-		    if interraction > choix[2]:
-			choix = (i, j, interraction)
-	
-	
-	
-	# détermination de la direction à suivre
-	
-	x = choix[0]
-	y = choix[1]
-	
-	directionRetour = direction[x][y]
-	
-	while x != self._x and y != self._y:
-	    directionRetour = direction[x][y]
-	    
-	    if direction[x][y] == Direction.Haut:
-		y += 1
-	    elif direction[x][y] == Direction.Droite:
-		x -= 1
-	    elif direction[x][y] == Direction.Bas:
-		y -= 1
-	    elif direction[x][y] == Direction.Gauche:
-		x += 1
-	
-	return directionRetour
-	
+        
+        collision = [[0] * 72 for i in range(96)]
+        direction = [[Direction.Aucune] * 72 for i in range(96)]
+        distance = [[-1] * 72 for i in range(96)]
+        
+        # tableau des collisions
+        
+        for i in range(96):
+            for j in range(72):
+                if carte[i][j].Bloc == Bloc.Brique or carte[i][j].Bloc == Bloc.Eau:
+                    collision[i][j] = 1
+                    distance[i][j] = -2
+                if carte[i][j].Objet == Objet.TableEcole or carte[i][j].Objet == Objet.Four or carte[i][j].Objet == Objet.Table:
+                    collision[i][j] = 1
+                    distance[i][j] = -2
+        
+        # tableau des directions et des distances, algorithme de pathfinding
+        
+        direction[self._x][self._y] = Direction.Aucune
+        distance[self._x][self._y] = 0
+        
+        for i in range(self._x, 0, -1):
+            for j in range(self._y, 0, -1):
+                if distance[i][j] >= 0:
+                    if distance[i-1][j] != -2 and (distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]):
+                        distance[i-1][j] = distance[i][j] + 1   
+                        direction[i-1][j] = Direction.Gauche
+                    if distance[i+1][j] != -2 and (distance[i+1][j] == -1 or distance[i][j] + 1 < distance[i+1][j]):
+                        distance[i+1][j] = distance[i][j] + 1
+                        direction[i+1][j] = Direction.Droite
+                    if distance[i][j-1] != -2 and (distance[i][j-1] == -1 or distance[i][j] + 1 < distance[i][j-1]):
+                        distance[i][j-1] = distance[i][j] + 1
+                        direction[i][j-1] = Direction.Haut
+                    if distance[i][j+1] != -2 and (distance[i][j+1] == -1 or distance[i][j] + 1 < distance[i][j+1]):
+                        distance[i][j+1] = distance[i][j] + 1
+                        direction[i][j+1] = Direction.Bas
+        
+        for i in range(self._x, 95):
+            for j in range(self._y, 0, -1):
+                if distance[i][j] >= 0:
+                    if distance[i-1][j] != -2 and (distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]):
+                        distance[i-1][j] = distance[i][j] + 1   
+                        direction[i-1][j] = Direction.Gauche
+                    if distance[i+1][j] != -2 and (distance[i+1][j] == -1 or distance[i][j] + 1 < distance[i+1][j]):
+                        distance[i+1][j] = distance[i][j] + 1
+                        direction[i+1][j] = Direction.Droite
+                    if distance[i][j-1] != -2 and (distance[i][j-1] == -1 or distance[i][j] + 1 < distance[i][j-1]):
+                        distance[i][j-1] = distance[i][j] + 1
+                        direction[i][j-1] = Direction.Haut
+                    if distance[i][j+1] != -2 and (distance[i][j+1] == -1 or distance[i][j] + 1 < distance[i][j+1]):
+                        distance[i][j+1] = distance[i][j] + 1
+                        direction[i][j+1] = Direction.Bas
+        
+        for i in range(self._x, 0, -1):
+            for j in range(self._y, 71):
+                if distance[i][j] >= 0:
+                    if distance[i-1][j] != -2 and (distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]):
+                        distance[i-1][j] = distance[i][j] + 1   
+                        direction[i-1][j] = Direction.Gauche
+                    if distance[i+1][j] != -2 and (distance[i+1][j] == -1 or distance[i][j] + 1 < distance[i+1][j]):
+                        distance[i+1][j] = distance[i][j] + 1
+                        direction[i+1][j] = Direction.Droite
+                    if distance[i][j-1] != -2 and (distance[i][j-1] == -1 or distance[i][j] + 1 < distance[i][j-1]):
+                        distance[i][j-1] = distance[i][j] + 1
+                        direction[i][j-1] = Direction.Haut
+                    if distance[i][j+1] != -2 and (distance[i][j+1] == -1 or distance[i][j] + 1 < distance[i][j+1]):
+                        distance[i][j+1] = distance[i][j] + 1
+                        direction[i][j+1] = Direction.Bas
+        
+        for i in range(self._x, 95):
+            for j in range(self._y, 71):
+                if distance[i][j] >= 0:
+                    if distance[i-1][j] != -2 and (distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]):
+                        distance[i-1][j] = distance[i][j] + 1   
+                        direction[i-1][j] = Direction.Gauche
+                    if distance[i+1][j] != -2 and (distance[i+1][j] == -1 or distance[i][j] + 1 < distance[i+1][j]):
+                        distance[i+1][j] = distance[i][j] + 1
+                        direction[i+1][j] = Direction.Droite
+                    if distance[i][j-1] != -2 and (distance[i][j-1] == -1 or distance[i][j] + 1 < distance[i][j-1]):
+                        distance[i][j-1] = distance[i][j] + 1
+                        direction[i][j-1] = Direction.Haut
+                    if distance[i][j+1] != -2 and (distance[i][j+1] == -1 or distance[i][j] + 1 < distance[i][j+1]):
+                        distance[i][j+1] = distance[i][j] + 1
+                        direction[i][j+1] = Direction.Bas
+        
+        # test pour chaque interraction
+        
+        choix = (0, 0, 0)
+        
+        for i in range(96):
+            for j in range(72):
+                
+                interraction = 0
+                
+                # interraction avec les objets
+                
+                if carte[i][j].Objet != Objet.Rien and distance[i][j] != -2:
+                    
+                    # calcul des envies
+                    
+                    # très importants
+                    
+                    if Carte[i][j].Objet == Objet.Lit:
+                        interraction += (self._fatigue + self._envie[Action.Dormir] + 101 - self._vie) / distance[i][j]
+                    elif Carte[i][j].Objet == Objet.EntreeFour:
+                        interraction += (self._faim + self._envie[Action.Manger] + 101 - self._vie + (50 if self._metier == Metier.Cuisinier else 0)) / distance[i][j]
+                    elif Carte[i][j].Objet == Objet.LitMedecin: 
+                        interraction += (self_maladie + self._envie[Action.EtreSoigne] + 101 - self._vie) / distance[i][j]
+                    elif Carte[i][j].Objet == Objet.LitPsychiatre:
+                        interraction += (self._envie[Action.EtreSoignePsy] + 202 - self._bonheur - self._vie) / distance[i][j]
+                
+                    # importants
+                    
+                    elif Carte[i][j].Objet == Objet.BancPeche:
+                        interraction += (2 * self._envie[Action.Pecher] + (50 if self._metier == Metier.Pecheur else 0)) / distance[i][j]
+                    elif Carte[i][j].Objet == Objet.ChaiseEcole:
+                        interraction += (0.8 * (self._envie[ActionApprendre] + 25) + (100 if (self._age >= 5 and self._age <= 15) else 30)) / distance[i][j]
+                    elif Carte[i][j].Objet == Objet.PlaceProf:
+                        interraction += (self._envie[Action.Enseigner] + (50 if self._metier == Metier.Professeur else 0)) / distance[i][j]
+                    elif Carte[i][j].Objet == Objet.ChaiseMedecin:
+                        interraction += (self._envie[Action.Soigner] + (50 if self._metier == Metier.Medecin else 0)) / distance[i][j]
+                    elif Carte[i][j].Objet == Objet.ChaisePsychiatre:
+                        interraction += (self._envie[Action.SoignerPsy] + (50 if self._metier == Metier.Psychiatre else 0)) / distance[i][j]
+                    
+                    # peu importants
+                    
+                    elif Carte[i][j].Objet == Objet.Banc:
+                        interraction += (0.8 * (self._envie[Action.Dormir] + self._fatigue)) / distance[i][j]
+                    elif Carte[i][j].Objet == Objet.Chaise:
+                        interraction += (0.8 * (self._envie[Action.Sasseoir] + self._fatigue)) / distance[i][j]
+                    elif Carte[i][j].Objet == Objet.Checkpoint:
+                        interraction += (1.2 * (self._envie[Action.Marcher] - self._fatigue)) / distance[i][j]
+                    
+                    if interraction > choix[2]:
+                        choix = (i, j, interraction)
+                
+                # interractions avec les autres IA
+                
+                if carte[i][j].isIA() and carte[i][j].IA() != self:
+                    
+                    # calcul d'envie d'interraction
+                    
+                    if interraction > choix[2]:
+                        choix = (i, j, interraction)
+        
+        
+        
+        # détermination de la direction à suivre
+        
+        x = choix[0]
+        y = choix[1]
+        
+        directionRetour = direction[x][y]
+        
+        while x != self._x and y != self._y:
+            directionRetour = direction[x][y]
+            
+            if direction[x][y] == Direction.Haut:
+                y += 1
+            elif direction[x][y] == Direction.Droite:
+                x -= 1
+            elif direction[x][y] == Direction.Bas:
+                y -= 1
+            elif direction[x][y] == Direction.Gauche:
+                x += 1
+        
+        return directionRetour
+        
     # Attributs publics de la classe par accès à des attributs privés
     
     vie = property(_get_vie, _set_vie)

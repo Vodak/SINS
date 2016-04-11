@@ -3,7 +3,7 @@ Classe Map permettant de créer une map aléatoire
 """
 
 from Tile import *
-from maths import *
+from math import *
 from random import *
 
 class Map:
@@ -22,31 +22,31 @@ class Map:
 
 		# Disposition des bordures en eau de la carte
 
-		for i in range(95):
+		for i in range(71):
 			self.map[0][i] = Bloc.Eau
 			self.map[1][i] = Bloc.Eau
-			self.map[70][i] = Bloc.Eau
-			self.map[71][i] = Bloc.Eau
+			self.map[94][i] = Bloc.Eau
+			self.map[95][i] = Bloc.Eau
 
-		for i in range(71):
+		for i in range(95):
 			self.map[i][0] = Bloc.Eau
 			self.map[i][1] = Bloc.Eau
-			self.map[i][94] = Bloc.Eau
-			self.map[i][95] = Bloc.Eau
+			self.map[i][70] = Bloc.Eau
+			self.map[i][71] = Bloc.Eau
 
 		# Disposition du sable
 
-		for i in range(2, 93):
+		for i in range(2, 70):
 			self.map[2][i] = Bloc.Sable
 			self.map[3][i] = Bloc.Sable
-			self.map[68][i] = Bloc.Sable
-			self.map[69][i] = Bloc.Sable
+			self.map[92][i] = Bloc.Sable
+			self.map[93][i] = Bloc.Sable
 
-		for i in range(2, 70):
+		for i in range(2, 93):
 			self.map[i][2] = Bloc.Sable
 			self.map[i][3] = Bloc.Sable
-			self.map[i][92] = Bloc.Sable
-			self.map[i][93] = Bloc.Sable
+			self.map[i][68] = Bloc.Sable
+			self.map[i][69] = Bloc.Sable
 
 		# Disposition de l'Hêrbe
 
@@ -56,10 +56,10 @@ class Map:
 
 		# Disposition du chemins
 
-		for i in range(14, 82):
+		for i in range(9, 63):
 			self.map[36][i] = Bloc.Route
 
-		for i in range(9, 63):
+		for i in range(14, 82):
 			self.map[i][48] = Bloc.Route
 
 		for i in range(29, 65):
