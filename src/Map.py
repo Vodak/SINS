@@ -4,7 +4,7 @@ Classe Map permettant de créer une map aléatoire
 
 from Tile import *
 from maths import *
-
+from random import *
 
 class Map:
 
@@ -14,7 +14,7 @@ class Map:
 		
 		# Carte de Case de 96*72
 		
-		self.map = [[Case] * 72 for i in range(96)] 
+		self.map = [[Tile] * 72 for i in range(96)] 
 
 	# Création de la carte
 
@@ -74,7 +74,7 @@ class Map:
 	# Création des maisons
 
 	def maison(self):
-		(x, y) = (0, 0)
+		(x, y) = (randint(0, 84), randint(0, 63))
 		
 		pointA = (x, y)
 		pointB = (x + 9, y + 6)
@@ -170,19 +170,3 @@ class Map:
 				self.map[x + 6][y + 4] = Objet.ChaisePsychiatre
 				
 				psychiatre = True
-	
-	# fonction renvoyant la distance minimale entre 2 blocs, en considérant les cases où il est impossible de se déplacer
-	
-	def getDistance(xDepart, yDepart, xObjectif, yObjectif):
-		carte = [[0] * 72 for i in range(96)]
-		carte2 = [[-1] * 72 for i in range(96)]
-		pile = [(xDepart, yDepart)]
-		
-		for i in range(72):
-			for j in range(96):
-				carte[i][j] = abs(xObjectif - i) + abs(yObjectif - j)
-		
-		carte2[xDepart][yDepart] = 0
-		
-		while carte2[xObjectif][yObjectif] == -1:
-			# à faire plus tard car trop complexe

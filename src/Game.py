@@ -2,7 +2,7 @@
 Classe Game qui gère le jeu
 """
 
-from map import *
+from Map import *
 
 class Game:
 	 
@@ -14,7 +14,7 @@ class Game:
 		
 	# Mise en place du jeu :
 		
-	def game(self):
+	def play(self):
 		
 		# Génération de la map :
 		
