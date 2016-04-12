@@ -3,8 +3,6 @@ Classe Tile permettant de creer un objet case pouvant contenir un personnage, un
 """
 
 from IA import *
-from Bloc import *
-from Objet import *
 
 class Tile :
 
@@ -13,8 +11,8 @@ class Tile :
 	def __init__(self):
 		
 		self._IA = list()
-		self._Bloc = Bloc()
-		self._Objet = Objet()
+		self._Bloc = Bloc.Eau
+		self._Objet = Objet.Rien
 		
 		
 	# Get List
@@ -25,6 +23,9 @@ class Tile :
 		    return False
 		else:
 		    return True
+	
+	def delIA(self):
+		_IA = list()
 	
 	def _get_IA(self):
 		return self._IA[0]
@@ -41,14 +42,14 @@ class Tile :
 	# Set List
 	
 	def _set_IA(self, IA):
-		
-		self._IA[0] = IA
+		_IA = list()
+		self._IA.append(IA)
 		
 	def _set_Bloc(self, Bloc):
 		
 		self._Bloc = Bloc
 	
-	def _set_Objet(self, IA):
+	def _set_Objet(self, Objet):
 		
 		self._Objet = Objet
 		
