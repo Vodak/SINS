@@ -6,6 +6,7 @@ from Tile import *
 from math import *
 from random import *
 
+
 class Map:
 
 	# constructeur
@@ -117,11 +118,11 @@ class Map:
 		if route and placable:
 			# Disposition des murs :
 			for i in range(x + 1, x + 8):
-				self.map[i][y] = Bloc.Brique
-				self.map[i][y + 5] = Bloc.Brique
+				self.map[i][y] = Bloc.Mur
+				self.map[i][y + 5] = Bloc.Mur
 			for j in range(y + 1, y + 6):
-				self.map[x][j] = Bloc.Brique
-				self.map[x + 8][j] = Bloc.Brique
+				self.map[x][j] = Bloc.Mur
+				self.map[x + 8][j] = Bloc.Mur
 			
 			# Disposition du plancher :
 			for k in range(x + 2, x + 7):
