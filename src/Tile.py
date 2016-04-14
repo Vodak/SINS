@@ -25,7 +25,7 @@ class Tile :
 		    return True
 	
 	def delIA(self):
-		_IA = list()
+		del self._IA[0]
 	
 	def _get_IA(self):
 		return self._IA[0]

@@ -246,9 +246,9 @@ class IA:
         fini = False
         
         while not fini:
-        
-            for i in range(self._x, 0, -1):
-                for j in range(self._y, 0, -1):
+            
+            for i in range(self._x, 1, -1):
+                for j in range(self._y, 1, -1):
                     if distance[i][j] >= 0:
                         if distance[i-1][j] != -2 and (distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]):
                             distance[i-1][j] = distance[i][j] + 1   
@@ -263,8 +263,8 @@ class IA:
                             distance[i][j+1] = distance[i][j] + 1
                             direction[i][j+1] = Direction.Bas
         
-            for i in range(self._x, 95):
-                for j in range(self._y, 0, -1):
+            for i in range(self._x, 95 ):
+                for j in range(self._y, 1, -1):
                     if distance[i][j] >= 0:
                         if distance[i-1][j] != -2 and (distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]):
                             distance[i-1][j] = distance[i][j] + 1   
@@ -279,7 +279,7 @@ class IA:
                             distance[i][j+1] = distance[i][j] + 1
                             direction[i][j+1] = Direction.Bas
         
-            for i in range(self._x, 0, -1):
+            for i in range(self._x, 1, -1):
                 for j in range(self._y, 71):
                     if distance[i][j] >= 0:
                         if distance[i-1][j] != -2 and (distance[i-1][j] == -1 or distance[i][j] + 1 < distance[i-1][j]):
@@ -313,17 +313,17 @@ class IA:
                          
             fini = True
             
-            for i in range(95):
-                for j in range(72):
+            for i in range(1, 95):
+                for j in range(1, 71):
                     if distance[i][j] == -1:
                         fini = False
-           
+        
         # test pour chaque interraction
         
         choix = (0, 0, 0)
         
-        for i in range(96):
-            for j in range(72):
+        for i in range(1, 95):
+            for j in range(1, 71):
                 
                 interraction = 0
                 
@@ -336,36 +336,35 @@ class IA:
                     # très importants
                     
                     if carte[i][j].Objet == Objet.Lit:
-                        print(self._fatigue, " ", self._envie[2], " ", self._vie, " ", distance[i][j])
-                        interraction += (self._fatigue + self._envie[2] + 101 - self._vie) / distance[i][j]
+                        interraction += (self._fatigue + self._envie[2] + 101 - self._vie) / (distance[i][j] + 1)
                     elif carte[i][j].Objet == Objet.EntreeFour:
-                        interraction += (self._faim + self._envie[Action.Manger] + 101 - self._vie + (50 if self._metier == Metier.Cuisinier else 0)) / distance[i][j]
+                        interraction += (self._faim + self._envie[4] + 101 - self._vie + (50 if self._metier == Metier.Cuisinier else 0)) / (distance[i][j] + 1)
                     elif carte[i][j].Objet == Objet.LitMedecin: 
-                        interraction += (self_maladie + self._envie[Action.EtreSoigne] + 101 - self._vie) / distance[i][j]
+                        interraction += (self._maladie + self._envie[7] + 101 - self._vie) / (distance[i][j] + 1)
                     elif carte[i][j].Objet == Objet.LitPsychiatre:
-                        interraction += (self._envie[Action.EtreSoignePsy] + 202 - self._bonheur - self._vie) / distance[i][j]
+                        interraction += (self._envie[9] + 202 - self._bonheur - self._vie) / (distance[i][j] + 1)
                 
                     # importants
                     
                     elif carte[i][j].Objet == Objet.BancPeche:
-                        interraction += (2 * self._envie[Action.Pecher] + (50 if self._metier == Metier.Pecheur else 0)) / distance[i][j]
+                        interraction += (2 * self._envie[11] + (50 if self._metier == Metier.Pecheur else 0)) / (distance[i][j] + 1)
                     elif carte[i][j].Objet == Objet.ChaiseEcole:
-                        interraction += (0.8 * (self._envie[ActionApprendre] + 25) + (100 if (self._age >= 5 and self._age <= 15) else 30)) / distance[i][j]
+                        interraction += (0.8 * (self._envie[6] + 25) + (100 if (self._age >= 5 and self._age <= 15) else 30)) / (distance[i][j] + 1)
                     elif carte[i][j].Objet == Objet.PlaceProf:
-                        interraction += (self._envie[Action.Enseigner] + (50 if self._metier == Metier.Professeur else 0)) / distance[i][j]
+                        interraction += (self._envie[5] + (50 if self._metier == Metier.Professeur else 0)) / (distance[i][j] + 1)
                     elif carte[i][j].Objet == Objet.ChaiseMedecin:
-                        interraction += (self._envie[Action.Soigner] + (50 if self._metier == Metier.Medecin else 0)) / distance[i][j]
+                        interraction += (self._envie[8] + (50 if self._metier == Metier.Medecin else 0)) / (distance[i][j] + 1)
                     elif carte[i][j].Objet == Objet.ChaisePsychiatre:
-                        interraction += (self._envie[Action.SoignerPsy] + (50 if self._metier == Metier.Psychiatre else 0)) / distance[i][j]
+                        interraction += (self._envie[10] + (50 if self._metier == Metier.Psychiatre else 0)) / (distance[i][j] + 1)
                     
                     # peu importants
                     
                     elif carte[i][j].Objet == Objet.Banc:
-                        interraction += (0.8 * (self._envie[Action.Dormir] + self._fatigue)) / distance[i][j]
+                        interraction += (0.8 * (self._envie[2] + self._fatigue)) / (distance[i][j] + 1)
                     elif carte[i][j].Objet == Objet.Chaise:
-                        interraction += (0.8 * (self._envie[Action.Sasseoir] + self._fatigue)) / distance[i][j]
+                        interraction += (0.8 * (self._envie[0] + self._fatigue)) / (distance[i][j] + 1)
                     elif carte[i][j].Objet == Objet.Checkpoint:
-                        interraction += (1.2 * (self._envie[Action.Marcher] - self._fatigue)) / distance[i][j]
+                        interraction += (1.2 * (self._envie[1] - self._fatigue)) / (distance[i][j] + 1)
                     #print(interraction)
                     if interraction > choix[2]:
                         choix = (i, j, interraction)

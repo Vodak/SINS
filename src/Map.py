@@ -16,9 +16,11 @@ class Map:
 		# Carte de Case de 96*72
 		
 		self.map = [[0] * 72 for i in range(96)]
+		
 		self.ecole = False
 		self.hopital = False
 		self.psychiatre = False
+		self.cuisinier = False
 
 	# Création de la carte
 
@@ -63,20 +65,11 @@ class Map:
 		
 		# Disposition du chemins
 
-		for i in range(9, 63):
-			self.map[36][i].Bloc = Bloc.Route
-
-		for i in range(14, 82):
-			self.map[i][48].Bloc = Bloc.Route
-
-		for i in range(29, 65):
-			self.map[i][14].Bloc = Bloc.Route
-			self.map[i][61].Bloc = Bloc.Route
-
-		for i in range(26, 48):
-			self.map[19][i].Bloc = Bloc.Route
-			self.map[67][i].Bloc = Bloc.Route
-			
+		routes = open("../files/map/1", "r")
+		
+		for j in range(72):
+			for i in range(96):
+				self.map[i][j].Bloc = Bloc.Route if routes.read(1) == "1" else self.map[i][j].Bloc
 	# Création des maisons
 	
 	def maison(self):
@@ -139,3 +132,78 @@ class Map:
 				self.map[k][l].Bloc = Bloc.Plancher
 		
 		self.map[positionPorte[0]][positionPorte[1]].Bloc = Bloc.Plancher
+		
+		# Aménagement des maisons
+		
+		if not self.ecole :
+			decale = 0
+			
+			if self.map[x + 5][y].Bloc == Bloc.Plancher:
+				decale = -2
+			elif self.map[x + 3][y + 5] == Bloc.Plancher or self.map[x + 5][y + 5] == Bloc.Plancher or self.map[x + 5][y + 5] == Bloc.Plancher:
+				decale = -1
+			
+			self.map[x + 3 + decale][y + 4].Objet = Objet.ChaiseEcole
+			self.map[x + 5 + decale][y + 4].Objet = Objet.ChaiseEcole
+			self.map[x + 7 + decale][y + 4].Objet = Objet.ChaiseEcole
+			
+			self.map[x + 3 + decale][y + 3].Objet = Objet.TableEcole
+			self.map[x + 5 + decale][y + 3].Objet = Objet.TableEcole
+			self.map[x + 7 + decale][y + 3].Objet = Objet.TableEcole
+			
+			self.map[x + 5 + decale][y + 1].Objet = Objet.Tableau
+			self.map[x + 5 + decale][y + 2].Objet = Objet.PlaceProf
+			
+			self.ecole = True
+		
+		elif not self.hopital :
+			self.map[x + 4][y + 2].Objet = Objet.LitMedecin
+			self.map[x + 3][y + 2].Objet = Objet.ChaiseMedecin
+			
+			self.map[x + 7][y + 2].Objet = Objet.LitMedecin
+			self.map[x + 6][y + 2].Objet = Objet.ChaiseMedecin
+			
+			self.map[x + 4][y + 4].Objet = Objet.LitMedecin
+			self.map[x + 3][y + 4].Objet = Objet.ChaiseMedecin
+			
+			self.map[x + 7][y + 4].Objet = Objet.LitMedecin
+			self.map[x + 6][y + 4].Objet = Objet.ChaiseMedecin
+			
+			self.hopital = True
+			
+		elif not self.psychiatre :
+			self.map[x + 4][y + 2].Objet = Objet.LitPsychiatre
+			self.map[x + 3][y + 2].Objet = Objet.ChaisePsychiatre
+			
+			self.map[x + 7][y + 2].Objet = Objet.LitPsychiatre
+			self.map[x + 6][y + 2].Objet = Objet.ChaisePsychiatre
+			
+			self.map[x + 4][y + 4].Objet = Objet.LitPsychiatre
+			self.map[x + 3][y + 4].Objet = Objet.ChaisePsychiatre
+			
+			self.map[x + 7][y + 4].Objet = Objet.LitPsychiatre
+			self.map[x + 6][y + 4].Objet = Objet.ChaisePsychiatre
+			
+			self.psychiatre = True
+		
+		elif not self.cuisinier :
+			self.map[x + 3][y + 2].Objet = Objet.Chaise
+			self.map[x + 3][y + 3].Objet = Objet.Table
+			self.map[x + 3][y + 4].Objet = Objet.Chaise
+			
+			self.map[x + 6][y + 2].Objet = Objet.Chaise
+			self.map[x + 6][y + 3].Objet = Objet.Table
+			self.map[x + 6][y + 4].Objet = Objet.Chaise
+			
+			self.map[x + 8][y + 4].Objet = Objet.EntreeFour
+			self.map[x + 8][y + 3].Objet = Objet.Four
+			
+			self.cuisinier = True
+		
+		else:
+			self.map[x + 2][y + 2].Objet = Objet.Lit
+			self.map[x + 4][y + 2].Objet = Objet.Lit
+			self.map[x + 5][y + 4].Objet = Objet.Chaise
+			self.map[x + 6][y + 4].Objet = Objet.Table
+			self.map[x + 7][y + 4].Objet = Objet.Chaise
+			self.map[x + ][y + ].Objet = Objet.Four
