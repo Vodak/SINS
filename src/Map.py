@@ -206,4 +206,4 @@ class Map:
 			self.map[x + 5][y + 4].Objet = Objet.Chaise
 			self.map[x + 6][y + 4].Objet = Objet.Table
 			self.map[x + 7][y + 4].Objet = Objet.Chaise
-			self.map[x + ][y + ].Objet = Objet.Four
+			#self.map[x + ][y + ].Objet = Objet.Four
