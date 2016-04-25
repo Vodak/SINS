@@ -4,6 +4,7 @@ Classe d'intelligence artificielle avec des attributs et des méthodes gérant l
 
 from Action import *
 from Metier import *
+from math import *
 from enum import Enum
 
 class Bloc(Enum):
@@ -46,7 +47,7 @@ class IA:
     
     def __init__(self, x , y, envie):
         self._vie = 100
-        self._fatigue = 0
+        self._fatigue = 40
         self._faim = 0
         self._bonheur = 100
         self._maladie = 0
@@ -221,7 +222,7 @@ class IA:
         
     # fonctions pour utiliser l'intelligence artificielle
     
-    def getDirection(self, carte):
+    def getAction(self, carte):
         
         collision = [[0] * 72 for i in range(96)]
         direction = [[Direction.Aucune] * 72 for i in range(96)]
@@ -331,44 +332,54 @@ class IA:
                 
                 if carte[i][j].Objet != Objet.Rien and distance[i][j] != -2:
                     
+                    important = False
+                    
                     # calcul des envies
                     
                     # très importants
                     
-                    if carte[i][j].Objet == Objet.Lit:
-                        interraction += (self._fatigue + self._envie[2] + 101 - self._vie) / (distance[i][j] + 1)
-                    elif carte[i][j].Objet == Objet.EntreeFour:
-                        interraction += (self._faim + self._envie[4] + 101 - self._vie + (50 if self._metier == Metier.Cuisinier else 0)) / (distance[i][j] + 1)
-                    elif carte[i][j].Objet == Objet.LitMedecin: 
-                        interraction += (self._maladie + self._envie[7] + 101 - self._vie) / (distance[i][j] + 1)
-                    elif carte[i][j].Objet == Objet.LitPsychiatre:
-                        interraction += (self._envie[9] + 202 - self._bonheur - self._vie) / (distance[i][j] + 1)
-                
-                    # importants
+                    if carte[i][j].Objet == Objet.Lit and self._fatigue >= 50:
+                        interraction += (self._fatigue + self._envie[2] + 101 - self._vie) / sqrt(distance[i][j] + 1)
+                        important = True
+                        
+                    if carte[i][j].Objet == Objet.EntreeFour and self._faim >= 50:
+                        interraction += (self._faim + self._envie[4] + 101 - self._vie + (50 if self._metier == Metier.Cuisinier else 0)) / sqrt(distance[i][j] + 1)
+                        important = True
+                        
+                    if carte[i][j].Objet == Objet.LitMedecin and self._vie <= 50: 
+                        interraction += (self._maladie + self._envie[7] + 101 - self._vie) / sqrt(distance[i][j] + 1)
+                        important = True
+                        
+                    if carte[i][j].Objet == Objet.LitPsychiatre and self._bonheur <= 50:
+                        interraction += (self._envie[9] + 202 - self._bonheur - self._vie) / sqrt(distance[i][j] + 1)
+                        important = True
                     
-                    elif carte[i][j].Objet == Objet.BancPeche:
-                        interraction += (2 * self._envie[11] + (50 if self._metier == Metier.Pecheur else 0)) / (distance[i][j] + 1)
-                    elif carte[i][j].Objet == Objet.ChaiseEcole:
-                        interraction += (0.8 * (self._envie[6] + 25) + (100 if (self._age >= 5 and self._age <= 15) else 30)) / (distance[i][j] + 1)
-                    elif carte[i][j].Objet == Objet.PlaceProf:
-                        interraction += (self._envie[5] + (50 if self._metier == Metier.Professeur else 0)) / (distance[i][j] + 1)
-                    elif carte[i][j].Objet == Objet.ChaiseMedecin:
-                        interraction += (self._envie[8] + (50 if self._metier == Metier.Medecin else 0)) / (distance[i][j] + 1)
-                    elif carte[i][j].Objet == Objet.ChaisePsychiatre:
-                        interraction += (self._envie[10] + (50 if self._metier == Metier.Psychiatre else 0)) / (distance[i][j] + 1)
-                    
-                    # peu importants
-                    
-                    elif carte[i][j].Objet == Objet.Banc:
-                        interraction += (0.8 * (self._envie[2] + self._fatigue)) / (distance[i][j] + 1)
-                    elif carte[i][j].Objet == Objet.Chaise:
-                        interraction += (0.8 * (self._envie[0] + self._fatigue)) / (distance[i][j] + 1)
-                    elif carte[i][j].Objet == Objet.Checkpoint:
-                        interraction += (1.2 * (self._envie[1] - self._fatigue)) / (distance[i][j] + 1)
-                    #print(interraction)
+                    if not important:
+                        
+                        # importants
+                        
+                        if carte[i][j].Objet == Objet.BancPeche:
+                            interraction += (2 * self._envie[11] + (50 if self._metier == Metier.Pecheur else 0)) / sqrt(distance[i][j] + 1)
+                        elif carte[i][j].Objet == Objet.ChaiseEcole:
+                            interraction += (0.8 * (self._envie[6] + 25) + (100 if (self._age >= 5 and self._age <= 15) else 15)) / sqrt(distance[i][j] + 1)
+                        elif carte[i][j].Objet == Objet.PlaceProf:
+                            interraction += (self._envie[5] + (50 if self._metier == Metier.Professeur else 0)) / sqrt(distance[i][j] + 1)
+                        elif carte[i][j].Objet == Objet.ChaiseMedecin:
+                            interraction += (self._envie[8] + (50 if self._metier == Metier.Medecin else 0)) / sqrt(distance[i][j] + 1)
+                        elif carte[i][j].Objet == Objet.ChaisePsychiatre:
+                            interraction += (self._envie[10] + (50 if self._metier == Metier.Psychiatre else 0)) / sqrt(distance[i][j] + 1)
+                        
+                        # peu importants
+                        
+                        elif carte[i][j].Objet == Objet.Banc:
+                            interraction += (0.8 * (self._envie[2] + self._fatigue)) / sqrt(distance[i][j] + 1) if self._fatigue < 50 else (0.5 * (self._envie[2] + self._fatigue)) / sqrt(distance[i][j] + 1)
+                        elif carte[i][j].Objet == Objet.Chaise:
+                            interraction += (0.8 * (self._envie[0] + self._fatigue)) / sqrt(distance[i][j] + 1) if self._fatigue < 50 else (0.5 * (self._envie[0] + self._fatigue)) / sqrt(distance[i][j] + 1)
+                        elif carte[i][j].Objet == Objet.Checkpoint:
+                            interraction += (1.2 * (self._envie[1] - self._fatigue)) / sqrt(distance[i][j] + 1)
+                        
                     if interraction > choix[2]:
                         choix = (i, j, interraction)
-                        
                 
                 # interractions avec les autres IA
                 
@@ -398,7 +409,7 @@ class IA:
             elif direction[x][y] == Direction.Gauche:
                 x += 1
         
-        return directionRetour
+        return directionRetour, True if distance[x][y] <= 1 else False
         
     # Attributs publics de la classe par accès à des attributs privés
     

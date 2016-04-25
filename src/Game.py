@@ -217,7 +217,7 @@ class Game:
 						if self.Map.map[x[i]][y[i]].IA.vie < 40: # si l'ia est mal en point
 							self.Map.map[x[i]][y[i]].IA.vie -= randint(0, 1)
 						
-						if self.Map.map[x[i]][y[i]].IA.age > 80:
+						if self.Map.map[x[i]][y[i]].IA.age > 80: # si l'ia est vieille
 							self.Map.map[x[i]][y[i]].IA.vie -= randint(3, 6)
 						
 						# déplacement de l'ia
