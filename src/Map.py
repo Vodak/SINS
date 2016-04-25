@@ -157,60 +157,89 @@ class Map:
 			self.ecole = True
 		
 		elif not self.hopital :
-			self.map[x + 4][y + 2].Objet = Objet.LitMedecin
-			self.map[x + 3][y + 2].Objet = Objet.ChaiseMedecin
+			decale = 0
+			decale2 = 0
 			
-			self.map[x + 7][y + 2].Objet = Objet.LitMedecin
-			self.map[x + 6][y + 2].Objet = Objet.ChaiseMedecin
+			if self.map[x + 3][y + 5] == Bloc.Plancher or self.map[x + 4][y + 5] == Bloc.Plancher or self.map[x + 6][y + 5] == Bloc.Plancher or self.map[x + 7][y + 5] == Bloc.Plancher:
+				decale = -1
+			elif self.map[x + 9][y + 2] == Bloc.Plancher or self.map[x + 9][y + 4] == Bloc.Plancher:
+				decale2 = -1
 			
-			self.map[x + 4][y + 4].Objet = Objet.LitMedecin
-			self.map[x + 3][y + 4].Objet = Objet.ChaiseMedecin
+			self.map[x + 4 + decale2][y + 2 + decale].Objet = Objet.LitMedecin
+			self.map[x + 3 + decale2][y + 2 + decale].Objet = Objet.ChaiseMedecin
 			
-			self.map[x + 7][y + 4].Objet = Objet.LitMedecin
-			self.map[x + 6][y + 4].Objet = Objet.ChaiseMedecin
+			self.map[x + 7 + decale2][y + 2 + decale].Objet = Objet.LitMedecin
+			self.map[x + 6 + decale2][y + 2 + decale].Objet = Objet.ChaiseMedecin
+			
+			self.map[x + 4 + decale2][y + 4 + decale].Objet = Objet.LitMedecin
+			self.map[x + 3 + decale2][y + 4 + decale].Objet = Objet.ChaiseMedecin
+			
+			self.map[x + 7 + decale2][y + 4 + decale].Objet = Objet.LitMedecin
+			self.map[x + 6 + decale2][y + 4 + decale].Objet = Objet.ChaiseMedecin
 			
 			self.hopital = True
 			
 		elif not self.psychiatre :
-			self.map[x + 4][y + 2].Objet = Objet.LitPsychiatre
-			self.map[x + 3][y + 2].Objet = Objet.ChaisePsychiatre
+			decale = 0
+			decale2 = 0
 			
-			self.map[x + 7][y + 2].Objet = Objet.LitPsychiatre
-			self.map[x + 6][y + 2].Objet = Objet.ChaisePsychiatre
+			if self.map[x + 3][y + 5] == Bloc.Plancher or self.map[x + 4][y + 5] == Bloc.Plancher or self.map[x + 6][y + 5] == Bloc.Plancher or self.map[x + 7][y + 5] == Bloc.Plancher:
+				decale = -1
+			elif self.map[x + 9][y + 2] == Bloc.Plancher or self.map[x + 9][y + 4] == Bloc.Plancher:
+				decale2 = -1
 			
-			self.map[x + 4][y + 4].Objet = Objet.LitPsychiatre
-			self.map[x + 3][y + 4].Objet = Objet.ChaisePsychiatre
+			self.map[x + 4 + decale2][y + 2 + decale].Objet = Objet.LitPsychiatre
+			self.map[x + 3 + decale2][y + 2 + decale].Objet = Objet.ChaisePsychiatre
 			
-			self.map[x + 7][y + 4].Objet = Objet.LitPsychiatre
-			self.map[x + 6][y + 4].Objet = Objet.ChaisePsychiatre
+			self.map[x + 7 + decale2][y + 2 + decale].Objet = Objet.LitPsychiatre
+			self.map[x + 6 + decale2][y + 2 + decale].Objet = Objet.ChaisePsychiatre
+			
+			self.map[x + 4 + decale2][y + 4 + decale].Objet = Objet.LitPsychiatre
+			self.map[x + 3 + decale2][y + 4 + decale].Objet = Objet.ChaisePsychiatre
+			
+			self.map[x + 7 + decale2][y + 4 + decale].Objet = Objet.LitPsychiatre
+			self.map[x + 6 + decale2][y + 4 + decale].Objet = Objet.ChaisePsychiatre
 			
 			self.psychiatre = True
 		
 		elif not self.cuisinier :
-			self.map[x + 3][y + 2].Objet = Objet.Chaise
-			self.map[x + 3][y + 3].Objet = Objet.Table
-			self.map[x + 3][y + 4].Objet = Objet.Chaise
+			decale = 0
+
+			if self.map[x + 1][y + 5].Bloc == Bloc.Plancher or self.map[x + 3][y + 5].Bloc == Bloc.Plancher or self.map[x + 5][y + 5].Bloc == Bloc.Plancher or self.map[x + 9][y + 3].Bloc == Bloc.Plancher:
+				decale = -1
 			
-			self.map[x + 6][y + 2].Objet = Objet.Chaise
-			self.map[x + 6][y + 3].Objet = Objet.Table
-			self.map[x + 6][y + 4].Objet = Objet.Chaise
+			self.map[x + 1][y + 2 + decale].Objet = Objet.Chaise
+			self.map[x + 1][y + 3 + decale].Objet = Objet.Table
+			self.map[x + 1][y + 4 + decale].Objet = Objet.Chaise
 			
-			self.map[x + 8][y + 4].Objet = Objet.EntreeFour
-			self.map[x + 8][y + 3].Objet = Objet.Four
+			self.map[x + 3][y + 2 + decale].Objet = Objet.Chaise
+			self.map[x + 3][y + 3 + decale].Objet = Objet.Table
+			self.map[x + 3][y + 4 + decale].Objet = Objet.Chaise
+			
+			self.map[x + 5][y + 2 + decale].Objet = Objet.Chaise
+			self.map[x + 5][y + 3 + decale].Objet = Objet.Table
+			self.map[x + 5][y + 4 + decale].Objet = Objet.Chaise
+			
+			self.map[x + 7][y + 4 + decale].Objet = Objet.EntreeFour
+			self.map[x + 7][y + 3 + decale].Objet = Objet.Four
+			
+			self.map[x + 4][y + 4 + decale].Objet = Objet.EntreeFour
+			self.map[x + 4][y + 3 + decale].Objet = Objet.Four
+			
+			self.map[x + 2][y + 4 + decale].Objet = Objet.EntreeFour
+			self.map[x + 2][y + 3 + decale].Objet = Objet.Four
 			
 			self.cuisinier = True
 		
 		else:
-			decaleFour = 0
+			decale = 0
 			
-			#if
+			if self.map[x + 5][y + 5].Bloc == Bloc.Plancher or self.map[x + 6][y + 5].Bloc == Bloc.Plancher or self.map[x + 7][y + 5].Bloc == Bloc.Plancher:
+				decale = -1
 			
 			self.map[x + 2][y + 2].Objet = Objet.Lit
 			self.map[x + 4][y + 2].Objet = Objet.Lit
 			
-			self.map[x + 5][y + 4].Objet = Objet.Chaise
-			self.map[x + 6][y + 4].Objet = Objet.Table
-			self.map[x + 7][y + 4].Objet = Objet.Chaise
-			
-			#self.map[x +  + decaleFour][y + ].Objet = Objet.Four
-			#self.map[x +  + decaleFour][y + ].Objet = Objet.EntreeFour
+			self.map[x + 5][y + 4 + decale].Objet = Objet.Chaise
+			self.map[x + 6][y + 4 + decale].Objet = Objet.Table
+			self.map[x + 7][y + 4 + decale].Objet = Objet.Chaise
