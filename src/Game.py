@@ -15,16 +15,22 @@ class Game:
 		
 		self.clock = sf.Clock()
 		
-		self.window = sf.RenderWindow(sf.VideoMode(960, 640), "SINS")
+		self.window = sf.RenderWindow(sf.VideoMode(960, 640), "SINS - An amazing not simulator by Vodak")
 		
 		self.key = {"UP": False, "DOWN": False, "RIGHT": False, "LEFT": False}
 		
 		# Chargement des textures :
-			
+		
+		# Ecran de chargement :
+		self.textureVodak = sf.Texture.from_file("../files/vodak.png")
+		
 		# Blocs :
 		self.textureEau = sf.Texture.from_file("../files/textures/eau.png")
 		self.textureSable = sf.Texture.from_file("../files/textures/sable.png")
 		self.textureHerbe = sf.Texture.from_file("../files/textures/herbe.png")
+		
+		self.textureHerbe2 = sf.Texture.from_file("../files/textures/testHerbe.png")
+		
 		self.texturePlancher = sf.Texture.from_file("../files/textures/plancher.png")
 		self.textureRoute = sf.Texture.from_file("../files/textures/route.png")
 		self.textureMur = [sf.Texture.from_file("../files/textures/mur/normal.png"),\
@@ -53,10 +59,16 @@ class Game:
 		
 		# Chargement des sprites :
 		
+		# Ecran de chargement :
+		self.spriteVodak = sf.Sprite(self.textureVodak)
+		
 		# Blocs :
 		self.spriteEau = sf.Sprite(self.textureEau)
 		self.spriteSable = sf.Sprite(self.textureSable)
 		self.spriteHerbe = sf.Sprite(self.textureHerbe)
+		
+		self.spriteHerbe2 = sf.Sprite(self.textureHerbe2)
+		
 		self.spritePlancher = sf.Sprite(self.texturePlancher)
 		self.spriteRoute = sf.Sprite(self.textureRoute)
 		self.spriteMur = [sf.Sprite(self.textureMur[0]), sf.Sprite(self.textureMur[1]), sf.Sprite(self.textureMur[2]), sf.Sprite(self.textureMur[3]), sf.Sprite(self.textureMur[4])]
@@ -89,10 +101,17 @@ class Game:
 		
 	def play(self):
 		
+		# Ecran d'acceuil :
+		
+		self.window.draw(self.spriteVodak)
+		sf.sleep(sf.seconds(2))
+		self.window.display()
+		self.window.clear()
+		
 		# Génération de la map :
 		
 		self.Map.generate()
-		
+
 		# Disposition des maisons :
 		for i in range(18):
 			self.Map.maison()
@@ -215,8 +234,8 @@ class Game:
 						self.window.draw(self.spriteSable)
 					
 					elif self.Map.map[i][j].Bloc == Bloc.Herbe:
-						self.spriteHerbe.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteHerbe)
+						self.spriteHerbe2.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
+						self.window.draw(self.spriteHerbe2)
 						
 					elif self.Map.map[i][j].Bloc == Bloc.Plancher:
 						self.spritePlancher.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
