@@ -47,7 +47,7 @@ class IA:
     
     def __init__(self, x , y, envie):
         self._vie = 100
-        self._fatigue = 40
+        self._fatigue = 00
         self._faim = 0
         self._bonheur = 100
         self._maladie = 0
