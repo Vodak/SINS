@@ -107,7 +107,7 @@ class Game:
 		
 		self.window.draw(self.spriteVodak)
 		self.window.display()
-		sf.sleep(sf.seconds(2))
+		#sf.sleep(sf.seconds(2))
 		self.window.clear()
 		
 		# Génération de la map :
@@ -115,7 +115,7 @@ class Game:
 		self.Map.generate()
 
 		# Disposition des maisons :
-		for i in range(18):
+		for i in range(20):
 			self.Map.maison()
 		
 		# Invocation des IA sur la map
@@ -129,7 +129,7 @@ class Game:
 			y = randint(0, 71)
 			
 		self.Map.map[x][y].IA = IA(x, y, 21 * [randint(0, 100)])
-		"""
+		
 		x = randint(0, 95)
 		y = randint(0, 71)
 		
@@ -139,7 +139,7 @@ class Game:
 			y = randint(0, 71)
 			
 		self.Map.map[x][y].IA = IA(x, y, 21 * [randint(0, 100)])
-		"""
+		
 		# Boucle principale :
 		
 		while self.window.is_open:
@@ -195,7 +195,7 @@ class Game:
 						
 						if self.tour % 10 == 0:
 							self.Map.map[x[i]][y[i]].IA.age += 1
-						
+						print("fatigue :", self.Map.map[x[i]][y[i]].IA.fatigue, " faim: ", self.Map.map[x[i]][y[i]].IA.faim, " vie: ", self.Map.map[x[i]][y[i]].IA.vie)
 						self.Map.map[x[i]][y[i]].IA.fatigue += randint(0, 1)
 						self.Map.map[x[i]][y[i]].IA.faim += randint(0, 1)
 						
@@ -249,15 +249,15 @@ class Game:
 						
 						if interraction:
 							if self.Map.map[x[i]][y[i]].Objet == Objet.Lit:
-								self.Map.map[x[i]][y[i]].IA.fatigue -= 50
+								self.Map.map[x[i]][y[i]].IA.fatigue = 0
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.EntreeFour:
-								self.Map.map[x[i]][y[i]].IA.faim -= 50
+								self.Map.map[x[i]][y[i]].IA.faim = 0
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.LitMedecin:
 								# penser à regarder s'il y a un médecin
 								self.Map.map[x[i]][y[i]].IA.vie = 100
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.LitPsychiatre:
 								# penser à regarder s'il y a un chaisePsy
-								self.Map.map[x[i]][y[i]].IA.bonheur += 50
+								self.Map.map[x[i]][y[i]].IA.bonheur = 100
 							
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.BancPeche:
 								self.Map.map[x[i]][y[i]].delIA()
@@ -304,8 +304,12 @@ class Game:
 						self.window.draw(self.spriteHerbe2)
 						
 					elif self.Map.map[i][j].Bloc == Bloc.Plancher:
-						self.spritePlancher.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spritePlancher)
+						if self.Map.map[i][j-1].Bloc == Bloc.Herbe:
+							self.spriteHerbe2.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
+							self.window.draw(self.spriteHerbe2)
+						else:
+							self.spritePlancher.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
+							self.window.draw(self.spritePlancher)
 					
 					elif self.Map.map[i][j].Bloc == Bloc.Route:
 						self.spriteRoute.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))

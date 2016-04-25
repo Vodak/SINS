@@ -17,10 +17,10 @@ class Map:
 		
 		self.map = [[0] * 72 for i in range(96)]
 		
-		self.ecole = False
-		self.hopital = False
-		self.psychiatre = False
-		self.cuisinier = False
+		self.ecole = 1
+		self.hopital = 1
+		self.psychiatre = 1
+		self.cuisinier = 2
 
 	# Création de la carte
 
@@ -135,7 +135,7 @@ class Map:
 		
 		# Aménagement des maisons
 		
-		if not self.ecole :
+		if self.ecole > 0:
 			decale = 0
 			
 			if self.map[x + 5][y].Bloc == Bloc.Plancher:
@@ -154,9 +154,9 @@ class Map:
 			self.map[x + 5 + decale][y + 1].Objet = Objet.Tableau
 			self.map[x + 5 + decale][y + 2].Objet = Objet.PlaceProf
 			
-			self.ecole = True
+			self.ecole -= 1
 		
-		elif not self.hopital :
+		elif self.hopital > 0:
 			decale = 0
 			decale2 = 0
 			
@@ -177,9 +177,9 @@ class Map:
 			self.map[x + 7 + decale2][y + 4 + decale].Objet = Objet.LitMedecin
 			self.map[x + 6 + decale2][y + 4 + decale].Objet = Objet.ChaiseMedecin
 			
-			self.hopital = True
+			self.hopital -= 1
 			
-		elif not self.psychiatre :
+		elif self.psychiatre > 0:
 			decale = 0
 			decale2 = 0
 			
@@ -200,9 +200,9 @@ class Map:
 			self.map[x + 7 + decale2][y + 4 + decale].Objet = Objet.LitPsychiatre
 			self.map[x + 6 + decale2][y + 4 + decale].Objet = Objet.ChaisePsychiatre
 			
-			self.psychiatre = True
+			self.psychiatre -= 1
 		
-		elif not self.cuisinier :
+		elif self.cuisinier > 0:
 			decale = 0
 
 			if self.map[x + 1][y + 5].Bloc == Bloc.Plancher or self.map[x + 3][y + 5].Bloc == Bloc.Plancher or self.map[x + 5][y + 5].Bloc == Bloc.Plancher or self.map[x + 9][y + 3].Bloc == Bloc.Plancher:
@@ -223,13 +223,10 @@ class Map:
 			self.map[x + 7][y + 4 + decale].Objet = Objet.EntreeFour
 			self.map[x + 7][y + 3 + decale].Objet = Objet.Four
 			
-			self.map[x + 4][y + 4 + decale].Objet = Objet.EntreeFour
-			self.map[x + 4][y + 3 + decale].Objet = Objet.Four
-			
 			self.map[x + 2][y + 4 + decale].Objet = Objet.EntreeFour
 			self.map[x + 2][y + 3 + decale].Objet = Objet.Four
 			
-			self.cuisinier = True
+			self.cuisinier -= 1
 		
 		else:
 			decale = 0

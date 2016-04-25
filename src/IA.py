@@ -322,6 +322,7 @@ class IA:
         # test pour chaque interraction
         
         choix = (0, 0, 0)
+        important = False
         
         for i in range(1, 95):
             for j in range(1, 71):
@@ -331,8 +332,6 @@ class IA:
                 # interraction avec les objets
                 
                 if carte[i][j].Objet != Objet.Rien and distance[i][j] != -2:
-                    
-                    important = False
                     
                     # calcul des envies
                     
