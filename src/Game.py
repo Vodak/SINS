@@ -1,336 +1,245 @@
 """
-Classe Game qui gère le jeu
+Classe Map permettant de créer une map aléatoire
 """
 
-from Map import *
-from Animation import *
+from Tile import *
+from math import *
+from random import *
 
-class Game:
-	 
-	# Constructeur:
-	
+
+class Map:
+
+	# constructeur
+
 	def __init__(self):
 		
-		self.Map = Map()
+		# Carte de Case de 96*72
 		
-		self.clock = sf.Clock()
+		self.map = [[0] * 72 for i in range(96)]
 		
-		self.window = sf.RenderWindow(sf.VideoMode(960, 640), "SINS - An amazing not simulator by Vodak")
-		
-		self.key = {"UP": False, "DOWN": False, "RIGHT": False, "LEFT": False}
-		
-		# Chargement des textures :
-		
-		# Ecran de chargement :
-		self.textureVodak = sf.Texture.from_file("../files/vodak.png")
-		
-		# Blocs :
-		self.textureEau = sf.Texture.from_file("../files/textures/eau.png")
-		self.textureSable = sf.Texture.from_file("../files/textures/sable.png")
-		self.textureHerbe = sf.Texture.from_file("../files/textures/herbe.png")
-		
-		self.textureHerbe2 = sf.Texture.from_file("../files/textures/testHerbe.png")
-		
-		self.texturePlancher = sf.Texture.from_file("../files/textures/plancher.png")
-		self.textureRoute = sf.Texture.from_file("../files/textures/route.png")
-		self.textureMur = [sf.Texture.from_file("../files/textures/mur/normal.png"),\
-					  sf.Texture.from_file("../files/textures/mur/gauche.png"),\
-					  sf.Texture.from_file("../files/textures/mur/droite.png"),\
-					  sf.Texture.from_file("../files/textures/mur/angle_gauche.png"),\
-					  sf.Texture.from_file("../files/textures/mur/angle_droit.png")]
-		
-		# IA :
-		self.textureIA = sf.Texture.from_file("../files/textures/IA.png")
-	
-		# Objets :
-		self.textureBanc = sf.Texture.from_file("../files/textures/banc.png")
-		self.textureLit = sf.Texture.from_file("../files/textures/lit.png")
-		self.textureLitMedecin = sf.Texture.from_file("../files/textures/litMedecin.png")
-		self.textureLitPsy = sf.Texture.from_file("../files/textures/lit.png")
-		self.textureChaise = sf.Texture.from_file("../files/textures/chaise.png")
-		self.textureChaiseEcole = sf.Texture.from_file("../files/textures/chaise.png")
-		self.textureChaiseMedecin = sf.Texture.from_file("../files/textures/chaise.png")
-		self.textureChaisePsy = sf.Texture.from_file("../files/textures/chaisePsy.png")
-		self.textureTable = sf.Texture.from_file("../files/textures/table.png")
-		self.textureTableEcole = sf.Texture.from_file("../files/textures/table.png")
-		self.textureFour = sf.Texture.from_file("../files/textures/four.png")
-		self.textureTableau = sf.Texture.from_file("../files/textures/tableau.png")
-		self.textureBancPeche = sf.Texture.from_file("../files/textures/banc.png")
-		
-		# Chargement des sprites :
-		
-		# Ecran de chargement :
-		self.spriteVodak = sf.Sprite(self.textureVodak)
-		
-		# Blocs :
-		self.spriteEau = sf.Sprite(self.textureEau)
-		self.spriteSable = sf.Sprite(self.textureSable)
-		self.spriteHerbe = sf.Sprite(self.textureHerbe)
-		
-		self.spriteHerbe2 = sf.Sprite(self.textureHerbe2)
-		
-		self.spritePlancher = sf.Sprite(self.texturePlancher)
-		self.spriteRoute = sf.Sprite(self.textureRoute)
-		self.spriteMur = [sf.Sprite(self.textureMur[0]), sf.Sprite(self.textureMur[1]), sf.Sprite(self.textureMur[2]), sf.Sprite(self.textureMur[3]), sf.Sprite(self.textureMur[4])]
-		
-		# IA :
-		self.spriteIA = sf.Sprite(self.textureIA)
-		
-		# Objets :
-		self.spriteBanc = sf.Sprite(self.textureBanc)
-		self.spriteLit = sf.Sprite(self.textureLit)
-		self.spriteLitMedecin = sf.Sprite(self.textureLitMedecin)
-		self.spriteLitPsy = sf.Sprite(self.textureLit)
-		self.spriteChaise = sf.Sprite(self.textureChaise)
-		self.spriteChaiseEcole = sf.Sprite(self.textureChaiseEcole)
-		self.spriteChaiseMedecin = sf.Sprite(self.textureChaiseMedecin)
-		self.spriteChaisePsy = sf.Sprite(self.textureChaisePsy)
-		self.spriteTable = sf.Sprite(self.textureTable)
-		self.spriteTableEcole = sf.Sprite(self.textureTableEcole)
-		self.spriteFour = sf.Sprite(self.textureFour)
-		self.spriteTableau = sf.Sprite(self.textureTableau)
-		self.spriteBancPeche = sf.Sprite(self.textureBancPeche)
-		
-		
-		# Scrolling :
-		
-		self.xMin = 0
-		self.yMin = 0
-		
-	# Mise en place du jeu :
-		
-	def play(self):
-		
-		# Ecran d'acceuil :
-		
-		self.window.draw(self.spriteVodak)
-		sf.sleep(sf.seconds(2))
-		self.window.display()
-		self.window.clear()
-		
-		# Génération de la map :
-		
-		self.Map.generate()
+		self.ecole = False
+		self.hopital = False
+		self.psychiatre = False
+		self.cuisinier = False
 
-		# Disposition des maisons :
-		for i in range(18):
-			self.Map.maison()
+	# Création de la carte
+
+	def generate(self):
 		
-		# Invocation des IA sur la map
+		# Disposition des bordures en eau de la carte
+		for i in range(96):
+			for j in range(72):
+				self.map[i][j] = Tile()
 		
-		x = randint(0, 95)
-		y = randint(0, 71)
+		for i in range(72):
+			self.map[0][i].Bloc = Bloc.Eau
+			self.map[1][i].Bloc = Bloc.Eau
+			self.map[94][i].Bloc = Bloc.Eau
+			self.map[95][i].Bloc = Bloc.Eau
+
+		for i in range(96):
+			self.map[i][0].Bloc = Bloc.Eau
+			self.map[i][1].Bloc = Bloc.Eau
+			self.map[i][70].Bloc = Bloc.Eau
+			self.map[i][71].Bloc = Bloc.Eau
+
+		# Disposition du sable
+
+		for i in range(2, 70):
+			self.map[2][i].Bloc = Bloc.Sable
+			self.map[3][i].Bloc = Bloc.Sable
+			self.map[92][i].Bloc = Bloc.Sable
+			self.map[93][i].Bloc = Bloc.Sable
+
+		for i in range(2, 93):
+			self.map[i][2].Bloc = Bloc.Sable
+			self.map[i][3].Bloc = Bloc.Sable
+			self.map[i][68].Bloc = Bloc.Sable
+			self.map[i][69].Bloc = Bloc.Sable
+
+		# Disposition de l'Hêrbe
+
+		for i in range(4, 92):
+			for j in range(4, 68):
+				self.map[i][j].Bloc = Bloc.Herbe
 		
-		while self.Map.map[x][y].Bloc != Bloc.Herbe and self.Map.map[x][y].Bloc != Bloc.Plancher and self.Map.map[x][y].Bloc != Bloc.Sable:
-			
-			x = randint(0, 95)
-			y = randint(0, 71)
-			
-		self.Map.map[x][y].IA = IA(x, y, 21 * [randint(0, 100)])
+		# Disposition du chemins
+
+		routes = open("../files/map/1", "r")
 		
-		x = randint(0, 95)
-		y = randint(0, 71)
-		
-		while self.Map.map[x][y].Bloc != Bloc.Herbe and self.Map.map[x][y].Bloc != Bloc.Plancher and self.Map.map[x][y].Bloc != Bloc.Sable and self.Map.map[x][y].isIA():
-			
-			x = randint(0, 95)
-			y = randint(0, 71)
-			
-		self.Map.map[x][y].IA = IA(x, y, 21 * [randint(0, 100)])
-		
-		# Boucle principale :
-		
-		while self.window.is_open:
-			
-			# gestion des evenements
-			
-			for event in self.window.events:
-			
-				if type(event) is sf.CloseEvent:
-					self.window.close()
-				
-				elif type(event) is sf.KeyEvent:
-					if event.code is sf.Keyboard.ESCAPE:
-						self.window.close()
-					elif event.code is sf.Keyboard.LEFT:
-						self.key["LEFT"] = event.pressed
-					elif event.code is sf.Keyboard.UP:
-						self.key["UP"] = event.pressed
-					elif event.code is sf.Keyboard.RIGHT:
-						self.key["RIGHT"] = event.pressed
-					elif event.code is sf.Keyboard.DOWN:
-						self.key["DOWN"] = event.pressed
-					
-			
-			if self.key["LEFT"]:
-				self.xMin = self.xMin - 1 if self.xMin > 0 else self.xMin
-			if self.key["RIGHT"]:
-				self.xMin = self.xMin + 1 if self.xMin < 66 else self.xMin
-			if self.key["UP"]:
-				self.yMin = self.yMin - 1 if self.yMin > 0 else self.yMin
-			if self.key["DOWN"]:
-				self.yMin = self.yMin + 1 if self.yMin < 52 else self.yMin
-			
-			# gestion des IA
-			
-			x = list()
-			y = list()
-			
+		for j in range(72):
 			for i in range(96):
-				for j in range(72):
-					if self.Map.map[i][j].isIA():
-						x.append(i)
-						y.append(j)
+				self.map[i][j].Bloc = Bloc.Route if routes.read(1) == "1" else self.map[i][j].Bloc
+	# Création des maisons
+	
+	def maison(self):
+		
+		(x, y) = (randint(0, 84), randint(0, 63))
+		
+		route = False
+		positionPorte = (x, y)
+		placable = False
+		
+		while not placable or not route:
 			
-			if(self.clock.elapsed_time.milliseconds > 1000):
-				self.clock.restart()
+			(x, y) = (randint(0, 84), randint(0, 63))
+		
+			route = False
+			positionPorte = (x, y)
+			placable = True
+		
+			for i in range(x - 1, x + 10):
+				for j in  range(y - 1, y + 7):
+					if self.map[i][j].Bloc != Bloc.Herbe:
+						placable = False
+			
+			if placable:
 				
-				for i in range(len(x)):
+				for i in range(x + 1, x + 7):
+					if self.map[i][y - 2].Bloc == Bloc.Route:
+						if not route:
+							positionPorte = (i, y)
+						route = True
 						
-						# update des valeurs de l'ia
+					elif self.map[i][y + 7].Bloc == Bloc.Route:
+						if not route:
+							positionPorte = (i, y + 5)
+						route = True
 						
-						self.Map.map[x[i]][y[i]].IA.fatigue += 1
-						self.Map.map[x[i]][y[i]].IA.faim += 1
-						self.Map.map[x[i]][y[i]].IA
-						
-						# déplacement de l'ia
+				for j in range(y + 1, y + 5):
+					if self.map[x - 2][j].Bloc == Bloc.Route:
+						if not route:
+							positionPorte = (x, j)
+						route = True
 					
-						direction = self.Map.map[x[i]][y[i]].IA.getDirection(self.Map.map)
-						
-						if direction == Direction.Bas and not self.Map.map[x[i]][y[i]+1].isIA():
-							self.Map.map[x[i]][y[i]].IA.y += 1
-							self.Map.map[x[i]][y[i]+1].IA = self.Map.map[x[i]][y[i]].IA
-							self.Map.map[x[i]][y[i]].delIA()
-						elif direction == Direction.Haut and not self.Map.map[x[i]][y[i]-1].isIA():
-							self.Map.map[x[i]][y[i]].IA.y -= 1
-							self.Map.map[x[i]][y[i]-1].IA = self.Map.map[x[i]][y[i]].IA
-							self.Map.map[x[i]][y[i]].delIA()
-						elif direction == Direction.Gauche and not self.Map.map[x[i]-1][y[i]].isIA():
-							self.Map.map[x[i]][y[i]].IA.x -= 1
-							self.Map.map[x[i]-1][y[i]].IA = self.Map.map[x[i]][y[i]].IA
-							self.Map.map[x[i]][y[i]].delIA()
-						elif direction == Direction.Droite and not self.Map.map[x[i]+1][y[i]].isIA():
-							self.Map.map[x[i]][y[i]].IA.x += 1
-							self.Map.map[x[i]+1][y[i]].IA = self.Map.map[x[i]][y[i]].IA
-							self.Map.map[x[i]][y[i]].delIA()
-						
-						
+					elif self.map[x + 10][j].Bloc == Bloc.Route:
+						if not route:
+							positionPorte = (x + 8, j)
+						route = True
 			
-			# affichage de la carte
 			
-			self.window.clear()
+		# Disposition des murs :
+		for i in range(x, x + 9):
+			self.map[i][y].Bloc = Bloc.Mur
+			self.map[i][y + 5].Bloc = Bloc.Mur
+		for j in range(y + 1, y + 6):
+			self.map[x][j].Bloc = Bloc.Mur
+			self.map[x + 8][j].Bloc = Bloc.Mur
+		
+		# Disposition du plancher :
+		for k in range(x + 1, x + 8):
+			for l in range(y + 1, y + 5):
+				self.map[k][l].Bloc = Bloc.Plancher
+		
+		self.map[positionPorte[0]][positionPorte[1]].Bloc = Bloc.Plancher
+		
+		# Aménagement des maisons
+		
+		if not self.ecole :
+			decale = 0
 			
-			for i in range(self.xMin, self.xMin + 30):
-				for j in range(self.yMin, self.yMin + 20):
-					
-					# affichage des blocs
-					
-					if self.Map.map[i][j].Bloc == Bloc.Eau:
-						self.spriteEau.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteEau)
-						
-					elif self.Map.map[i][j].Bloc == Bloc.Sable:
-						self.spriteSable.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteSable)
-					
-					elif self.Map.map[i][j].Bloc == Bloc.Herbe:
-						self.spriteHerbe2.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteHerbe2)
-						
-					elif self.Map.map[i][j].Bloc == Bloc.Plancher:
-						self.spritePlancher.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spritePlancher)
-					
-					elif self.Map.map[i][j].Bloc == Bloc.Route:
-						self.spriteRoute.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteRoute)
-					
-					elif self.Map.map[i][j].Bloc == Bloc.Mur:
-						
-						if self.Map.map[i-1][j].Bloc == Bloc.Herbe:
-							if self.Map.map[i][j+1].Bloc == Bloc.Herbe:
-								self.spriteMur[0].position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-								self.window.draw(self.spriteMur[0])
-							elif self.Map.map[i][j-1].Bloc == Bloc.Mur or self.Map.map[i][j-1].Bloc == Bloc.Plancher:
-								self.spriteMur[1].position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-								self.window.draw(self.spriteMur[1])
-							else:
-								self.spriteMur[3].position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-								self.window.draw(self.spriteMur[3])
-								
-						elif self.Map.map[i+1][j].Bloc == Bloc.Herbe:
-							if self.Map.map[i][j+1].Bloc == Bloc.Herbe:
-								self.spriteMur[0].position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-								self.window.draw(self.spriteMur[0])
-							elif self.Map.map[i][j-1].Bloc == Bloc.Mur or self.Map.map[i][j-1].Bloc == Bloc.Plancher:
-								self.spriteMur[2].position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-								self.window.draw(self.spriteMur[2])
-							else:
-								self.spriteMur[4].position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-								self.window.draw(self.spriteMur[4])
-						else:
-							self.spriteMur[0].position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-							self.window.draw(self.spriteMur[0])
-						
-					
-					# affichage des objets
-					
-					if self.Map.map[i][j].Objet == Objet.Banc:
-						self.spriteBanc.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteBanc)
-					
-					elif self.Map.map[i][j].Objet == Objet.Lit:
-						self.spriteLit.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteLit)
-					
-					elif self.Map.map[i][j].Objet == Objet.ChaiseEcole:
-						self.spriteChaiseEcole.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteChaiseEcole)
-					
-					elif self.Map.map[i][j].Objet == Objet.TableEcole:
-						self.spriteTableEcole.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteTableEcole)
-					
-					elif self.Map.map[i][j].Objet == Objet.Four:
-						self.spriteFour.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteFour)
-					
-					elif self.Map.map[i][j].Objet == Objet.Chaise:
-						self.spriteChaise.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteChaise)
-					
-					elif self.Map.map[i][j].Objet == Objet.Table:
-						self.spriteTable.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteTable)
-					
-					elif self.Map.map[i][j].Objet == Objet.Tableau:
-						self.spriteTableau.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin - 1))
-						self.window.draw(self.spriteTableau)
-					
-					elif self.Map.map[i][j].Objet == Objet.LitMedecin:
-						self.spriteLitMedecin.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteLitMedecin)
-					
-					elif self.Map.map[i][j].Objet == Objet.ChaiseMedecin:
-						self.spriteChaiseMedecin.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteChaiseMedecin)
-					
-					elif self.Map.map[i][j].Objet == Objet.LitPsychiatre:
-						self.spriteLitPsy.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteLitPsy)
-					
-					elif self.Map.map[i][j].Objet == Objet.ChaisePsychiatre:
-						self.spriteChaisePsy.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteChaisePsy)
-					
-					elif self.Map.map[i][j].Objet == Objet.BancPeche:
-						self.spriteBancPeche.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteBancPeche)
-					
-					# affichage des IA
-					
-					if self.Map.map[i][j].isIA():
-						self.spriteIA.position = sf.Vector2(32 * (i - self.xMin), 32 * (j - self.yMin))
-						self.window.draw(self.spriteIA)
-						
-			self.window.display()
+			if self.map[x + 5][y].Bloc == Bloc.Plancher:
+				decale = -2
+			elif self.map[x + 3][y + 5] == Bloc.Plancher or self.map[x + 5][y + 5] == Bloc.Plancher or self.map[x + 5][y + 5] == Bloc.Plancher:
+				decale = -1
+			
+			self.map[x + 3 + decale][y + 4].Objet = Objet.ChaiseEcole
+			self.map[x + 5 + decale][y + 4].Objet = Objet.ChaiseEcole
+			self.map[x + 7 + decale][y + 4].Objet = Objet.ChaiseEcole
+			
+			self.map[x + 3 + decale][y + 3].Objet = Objet.TableEcole
+			self.map[x + 5 + decale][y + 3].Objet = Objet.TableEcole
+			self.map[x + 7 + decale][y + 3].Objet = Objet.TableEcole
+			
+			self.map[x + 5 + decale][y + 1].Objet = Objet.Tableau
+			self.map[x + 5 + decale][y + 2].Objet = Objet.PlaceProf
+			
+			self.ecole = True
+		
+		elif not self.hopital :
+			decale = 0
+			decale2 = 0
+			
+			if self.map[x + 3][y + 5] == Bloc.Plancher or self.map[x + 4][y + 5] == Bloc.Plancher or self.map[x + 6][y + 5] == Bloc.Plancher or self.map[x + 7][y + 5] == Bloc.Plancher:
+				decale = -1
+			elif self.map[x + 9][y + 2] == Bloc.Plancher or self.map[x + 9][y + 4] == Bloc.Plancher:
+				decale2 = -1
+			
+			self.map[x + 4 + decale2][y + 2 + decale].Objet = Objet.LitMedecin
+			self.map[x + 3 + decale2][y + 2 + decale].Objet = Objet.ChaiseMedecin
+			
+			self.map[x + 7 + decale2][y + 2 + decale].Objet = Objet.LitMedecin
+			self.map[x + 6 + decale2][y + 2 + decale].Objet = Objet.ChaiseMedecin
+			
+			self.map[x + 4 + decale2][y + 4 + decale].Objet = Objet.LitMedecin
+			self.map[x + 3 + decale2][y + 4 + decale].Objet = Objet.ChaiseMedecin
+			
+			self.map[x + 7 + decale2][y + 4 + decale].Objet = Objet.LitMedecin
+			self.map[x + 6 + decale2][y + 4 + decale].Objet = Objet.ChaiseMedecin
+			
+			self.hopital = True
+			
+		elif not self.psychiatre :
+			decale = 0
+			decale2 = 0
+			
+			if self.map[x + 3][y + 5] == Bloc.Plancher or self.map[x + 4][y + 5] == Bloc.Plancher or self.map[x + 6][y + 5] == Bloc.Plancher or self.map[x + 7][y + 5] == Bloc.Plancher:
+				decale = -1
+			elif self.map[x + 9][y + 2] == Bloc.Plancher or self.map[x + 9][y + 4] == Bloc.Plancher:
+				decale2 = -1
+			
+			self.map[x + 4 + decale2][y + 2 + decale].Objet = Objet.LitPsychiatre
+			self.map[x + 3 + decale2][y + 2 + decale].Objet = Objet.ChaisePsychiatre
+			
+			self.map[x + 7 + decale2][y + 2 + decale].Objet = Objet.LitPsychiatre
+			self.map[x + 6 + decale2][y + 2 + decale].Objet = Objet.ChaisePsychiatre
+			
+			self.map[x + 4 + decale2][y + 4 + decale].Objet = Objet.LitPsychiatre
+			self.map[x + 3 + decale2][y + 4 + decale].Objet = Objet.ChaisePsychiatre
+			
+			self.map[x + 7 + decale2][y + 4 + decale].Objet = Objet.LitPsychiatre
+			self.map[x + 6 + decale2][y + 4 + decale].Objet = Objet.ChaisePsychiatre
+			
+			self.psychiatre = True
+		
+		elif not self.cuisinier :
+			decale = 0
+
+			if self.map[x + 1][y + 5].Bloc == Bloc.Plancher or self.map[x + 3][y + 5].Bloc == Bloc.Plancher or self.map[x + 5][y + 5].Bloc == Bloc.Plancher or self.map[x + 9][y + 3].Bloc == Bloc.Plancher:
+				decale = -1
+			
+			self.map[x + 1][y + 2 + decale].Objet = Objet.Chaise
+			self.map[x + 1][y + 3 + decale].Objet = Objet.Table
+			self.map[x + 1][y + 4 + decale].Objet = Objet.Chaise
+			
+			self.map[x + 3][y + 2 + decale].Objet = Objet.Chaise
+			self.map[x + 3][y + 3 + decale].Objet = Objet.Table
+			self.map[x + 3][y + 4 + decale].Objet = Objet.Chaise
+			
+			self.map[x + 5][y + 2 + decale].Objet = Objet.Chaise
+			self.map[x + 5][y + 3 + decale].Objet = Objet.Table
+			self.map[x + 5][y + 4 + decale].Objet = Objet.Chaise
+			
+			self.map[x + 7][y + 4 + decale].Objet = Objet.EntreeFour
+			self.map[x + 7][y + 3 + decale].Objet = Objet.Four
+			
+			self.map[x + 4][y + 4 + decale].Objet = Objet.EntreeFour
+			self.map[x + 4][y + 3 + decale].Objet = Objet.Four
+			
+			self.map[x + 2][y + 4 + decale].Objet = Objet.EntreeFour
+			self.map[x + 2][y + 3 + decale].Objet = Objet.Four
+			
+			self.cuisinier = True
+		
+		else:
+			decale = 0
+			
+			if self.map[x + 5][y + 5].Bloc == Bloc.Plancher or self.map[x + 6][y + 5].Bloc == Bloc.Plancher or self.map[x + 7][y + 5].Bloc == Bloc.Plancher:
+				decale = -1
+			
+			self.map[x + 2][y + 2].Objet = Objet.Lit
+			self.map[x + 4][y + 2].Objet = Objet.Lit
+			
+			self.map[x + 5][y + 4 + decale].Objet = Objet.Chaise
+			self.map[x + 6][y + 4 + decale].Objet = Objet.Table
+			self.map[x + 7][y + 4 + decale].Objet = Objet.Chaise
