@@ -19,10 +19,6 @@ class Action(Enum):
     Pecher = 11
     
     Frapper = 12
-    SeFaireFrapper = 13
-    Parler = 14
-    Repondre = 15
-    Fuir = 16
-    Embrasser = 17
-    SeReproduire = 18
-    Facher = 19
+    Parler = 13
+    Embrasser = 14
+    SeReproduire = 15
