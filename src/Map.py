@@ -21,6 +21,7 @@ class Map:
 		self.hopital = 1
 		self.psychiatre = 1
 		self.cuisinier = 2
+		self.bancPeche = 3
 
 	# Création de la carte
 
@@ -166,16 +167,11 @@ class Map:
 				decale2 = -1
 			
 			self.map[x + 4 + decale2][y + 2 + decale].Objet = Objet.LitMedecin
-			self.map[x + 3 + decale2][y + 2 + decale].Objet = Objet.ChaiseMedecin
-			
 			self.map[x + 7 + decale2][y + 2 + decale].Objet = Objet.LitMedecin
-			self.map[x + 6 + decale2][y + 2 + decale].Objet = Objet.ChaiseMedecin
-			
 			self.map[x + 4 + decale2][y + 4 + decale].Objet = Objet.LitMedecin
-			self.map[x + 3 + decale2][y + 4 + decale].Objet = Objet.ChaiseMedecin
-			
 			self.map[x + 7 + decale2][y + 4 + decale].Objet = Objet.LitMedecin
-			self.map[x + 6 + decale2][y + 4 + decale].Objet = Objet.ChaiseMedecin
+			
+			self.map[x + 2 + decale2][y + 2 + decale].Objet = Objet.ChaiseMedecin
 			
 			self.hopital -= 1
 			
@@ -189,16 +185,12 @@ class Map:
 				decale2 = -1
 			
 			self.map[x + 4 + decale2][y + 2 + decale].Objet = Objet.LitPsychiatre
-			self.map[x + 3 + decale2][y + 2 + decale].Objet = Objet.ChaisePsychiatre
-			
 			self.map[x + 7 + decale2][y + 2 + decale].Objet = Objet.LitPsychiatre
-			self.map[x + 6 + decale2][y + 2 + decale].Objet = Objet.ChaisePsychiatre
-			
 			self.map[x + 4 + decale2][y + 4 + decale].Objet = Objet.LitPsychiatre
-			self.map[x + 3 + decale2][y + 4 + decale].Objet = Objet.ChaisePsychiatre
-			
 			self.map[x + 7 + decale2][y + 4 + decale].Objet = Objet.LitPsychiatre
-			self.map[x + 6 + decale2][y + 4 + decale].Objet = Objet.ChaisePsychiatre
+			
+			self.map[x + 2 + decale2][y + 2 + decale].Objet = Objet.ChaisePsychiatre
+			
 			
 			self.psychiatre -= 1
 		
@@ -240,3 +232,10 @@ class Map:
 			self.map[x + 5][y + 4 + decale].Objet = Objet.Chaise
 			self.map[x + 6][y + 4 + decale].Objet = Objet.Table
 			self.map[x + 7][y + 4 + decale].Objet = Objet.Chaise
+			
+		while self.bancPeche > 0:
+			
+			(lenght, height) = (randint(0, 84), randint(0, 63))
+			
+			if self.map[lenght][height].Bloc == Bloc.Sable:
+				self.map[lenght][height].Objet == Objet.BancPeche
