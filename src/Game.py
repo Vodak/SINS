@@ -107,7 +107,7 @@ class Game:
 		
 		self.window.draw(self.spriteVodak)
 		self.window.display()
-		#sf.sleep(sf.seconds(2))
+		sf.sleep(sf.seconds(2))
 		self.window.clear()
 		
 		# Génération de la map :
@@ -120,25 +120,16 @@ class Game:
 		
 		# Invocation des IA sur la map
 		
-		x = randint(0, 95)
-		y = randint(0, 71)
-		
-		while self.Map.map[x][y].Bloc != Bloc.Herbe and self.Map.map[x][y].Bloc != Bloc.Plancher and self.Map.map[x][y].Bloc != Bloc.Sable:
-			
+		for i in range(3):
 			x = randint(0, 95)
 			y = randint(0, 71)
 			
-		self.Map.map[x][y].IA = IA(x, y, 21 * [randint(0, 100)])
-		
-		x = randint(0, 95)
-		y = randint(0, 71)
-		
-		while self.Map.map[x][y].Bloc != Bloc.Herbe and self.Map.map[x][y].Bloc != Bloc.Plancher and self.Map.map[x][y].Bloc != Bloc.Sable and self.Map.map[x][y].isIA():
-			
-			x = randint(0, 95)
-			y = randint(0, 71)
-			
-		self.Map.map[x][y].IA = IA(x, y, 21 * [randint(0, 100)])
+			while self.Map.map[x][y].Bloc != Bloc.Herbe and self.Map.map[x][y].Bloc != Bloc.Plancher and self.Map.map[x][y].Bloc != Bloc.Sable:
+				
+				x = randint(0, 95)
+				y = randint(0, 71)
+				
+			self.Map.map[x][y].IA = IA(x, y, 21 * [randint(0, 100)])
 		
 		# Boucle principale :
 		
@@ -195,7 +186,7 @@ class Game:
 						
 						if self.tour % 10 == 0:
 							self.Map.map[x[i]][y[i]].IA.age += 1
-						print("fatigue :", self.Map.map[x[i]][y[i]].IA.fatigue, " faim: ", self.Map.map[x[i]][y[i]].IA.faim, " vie: ", self.Map.map[x[i]][y[i]].IA.vie)
+						
 						self.Map.map[x[i]][y[i]].IA.fatigue += randint(0, 1)
 						self.Map.map[x[i]][y[i]].IA.faim += randint(0, 1)
 						
@@ -253,14 +244,12 @@ class Game:
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.EntreeFour:
 								self.Map.map[x[i]][y[i]].IA.faim = 0
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.LitMedecin:
-								# penser à regarder s'il y a un médecin
 								self.Map.map[x[i]][y[i]].IA.vie = 100
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.LitPsychiatre:
-								# penser à regarder s'il y a un chaisePsy
 								self.Map.map[x[i]][y[i]].IA.bonheur = 100
 							
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.BancPeche:
-								self.Map.map[x[i]][y[i]].delIA()
+								pass
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.ChaiseEcole:
 								pass
 							elif self.Map.map[x[i]][y[i]].Objet == Objet.PlaceProf:
@@ -279,7 +268,7 @@ class Game:
 						
 						# mort de l'ia si sa vie est nulle
 							
-							if self.Map.map[x[i]][y[i]].IA.vie == 0:
+							if self.Map.map[x[i]][y[i]].isIA() and self.Map.map[x[i]][y[i]].IA.vie == 0:
 								self.Map.map[x[i]][y[i]].delIA()
 			
 			# affichage de la carte

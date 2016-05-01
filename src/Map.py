@@ -238,4 +238,5 @@ class Map:
 			(lenght, height) = (randint(0, 84), randint(0, 63))
 			
 			if self.map[lenght][height].Bloc == Bloc.Sable:
-				self.map[lenght][height].Objet == Objet.BancPeche
+				self.map[lenght][height].Objet = Objet.BancPeche
+				self.bancPeche -= 1
